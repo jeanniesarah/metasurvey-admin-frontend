@@ -22,6 +22,25 @@ export const getSurvey = id => {
   return fetch(`${apiUrl}/admin/survey/${id}`, {
     headers: {
       Authorization: `Bearer ${getToken()}`,
+      'Content-Type': 'application/json',
+    },
+  }).then(body => body.json());
+};
+
+export const getSurveyStatsPiechart = id => {
+  return fetch(`${apiUrl}/admin/stat/${id}/piechart`, {
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+      'Content-Type': 'application/json',
+    },
+  }).then(body => body.json());
+};
+
+export const getSurveyStatsAnswers = id => {
+  return fetch(`${apiUrl}/admin/stat/${id}/table`, {
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+      'Content-Type': 'application/json',
     },
   }).then(body => body.json());
 };

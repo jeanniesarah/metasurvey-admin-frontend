@@ -12,17 +12,22 @@ import {
   updateSurveyQuestion,
   deleteSurveyQuestion,
 } from '../../lib/api';
+import { copyTextToClipboard } from '../../lib/clipboard';
 import styles from './styles.module.css';
 import Answers from './components/Answers';
 import Stats from './components/Stats';
 import logo from '../SurveysList/logo.png';
 const { Title } = Typography;
 
+const userSurveyDomain = 'https://public.getmetasurvey.com';
+
 const SurveyEdit = () => {
   let { id: surveyId } = useParams();
 
   const [title, setTitle] = useState('');
   const [survey, setSurvey] = useState(undefined);
+
+  const userSurveyUrl = `${userSurveyDomain}/?survey_id=${surveyId}`;
 
   const deleteSurveyWithConfirm = () => {
     /* eslint-disable no-restricted-globals */
@@ -110,6 +115,12 @@ const SurveyEdit = () => {
       </div>
       <section className={styles.section}>
         <Title>{title}</Title>
+        <p>
+          Send this link to users:
+          <br/>
+          <a href={userSurveyUrl} target={'_blank'}>{userSurveyUrl}</a>
+          <Button icon="copy" style={{ marginLeft: 10 }} onClick={() => copyTextToClipboard(userSurveyUrl)} />
+        </p>
         <Button
           icon="left"
           style={{ marginRight: 10 }}
@@ -136,10 +147,10 @@ const SurveyEdit = () => {
         />
       </section>
       <section className={styles.section}>
-        <Stats />
+        <Stats surveyId={surveyId} />
       </section>
       <section className={styles.section}>
-        <Answers />
+        <Answers surveyId={surveyId} />
       </section>
       <section className={styles.section}>
         <Title level={3}>Edit questions</Title>
