@@ -20,8 +20,8 @@ function App() {
   return isTokenValid ? (
     <Router>
       <Switch>
-        <Route exact path="/" >
-          <Redirect to="/admin/surveys"/>
+        <Route exact path="/">
+          <Redirect to="/admin/surveys" />
         </Route>
         <Route path="/admin/surveys">
           <SurveysList />
@@ -43,7 +43,6 @@ function App() {
           path={`/login`}
           render={props => <LoginForm />}
         />
-        {/* <Redirect to="/404" /> */}
       </Switch>
     </Router>
   ) : (

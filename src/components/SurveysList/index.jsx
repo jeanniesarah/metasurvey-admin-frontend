@@ -1,5 +1,6 @@
 import React from 'react';
 import { Typography, Input, Button, Spin } from 'antd';
+import { Redirect } from 'react-router-dom';
 
 import logo from './logo.png';
 import styles from './styles.module.css';
@@ -12,7 +13,7 @@ const SurveysList = () => {
   const token = window.localStorage.getItem('token');
 
   if (!token) {
-    window.location.replace('https://getmetasurvey.com');
+    return <Redirect to="/login" />;
   }
 
   if (!surveys) {
