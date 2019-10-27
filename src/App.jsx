@@ -17,7 +17,7 @@ import { validateToken } from 'lib/api';
 function App() {
   const isTokenValid = validateToken();
 
-  return isTokenValid ? (
+  return (
     <Router>
       <Switch>
         <Route exact path="/">
@@ -45,8 +45,6 @@ function App() {
         />
       </Switch>
     </Router>
-  ) : (
-    <Redirect to="/login" />
   );
 }
 

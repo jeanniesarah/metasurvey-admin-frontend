@@ -52,7 +52,7 @@ class JoinForm extends Component {
           .post(REGISTER, { email, password: password1 })
           .then(response => {
             // handle success
-            console.log(response);
+            // console.log(response);
             let accessToken = response.data.jwtToken;
 
             // Django returns the access token.
