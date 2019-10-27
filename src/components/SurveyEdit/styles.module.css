@@ -1,3 +1,23 @@
-.section {
+.logo {
+  max-width: 200px;
+  height: auto;
+}
+
+.surveys {
+  margin: -5px;
+}
+
+.surveys > * {
+  margin: 5px;
+}
+
+.section + .section {
+  margin-top: 50px;
+}
+
+.pillbox {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 50px;
 }

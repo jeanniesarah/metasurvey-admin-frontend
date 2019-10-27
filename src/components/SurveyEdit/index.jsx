@@ -7,6 +7,7 @@ import Logo from './components/Logo';
 import {
   saveSurvey,
   getSurvey,
+  deleteSurvey,
   addSurveyQuestion,
   updateSurveyQuestion,
   deleteSurveyQuestion,
@@ -14,6 +15,7 @@ import {
 import styles from './styles.module.css';
 import Answers from './components/Answers';
 import Stats from './components/Stats';
+import logo from '../SurveysList/logo.png';
 const { Title } = Typography;
 
 const SurveyEdit = () => {
@@ -21,6 +23,16 @@ const SurveyEdit = () => {
 
   const [title, setTitle] = useState('');
   const [survey, setSurvey] = useState(undefined);
+
+  const deleteSurveyWithConfirm = () => {
+    /* eslint-disable no-restricted-globals */
+    if (confirm('Are you sure?')) {
+      deleteSurvey({ surveyId }).then(() => {
+        document.location.href = '../surveys';
+      });
+    }
+    /* eslint-enable no-restricted-globals */
+  };
 
   const saveQuestion = ({ questionId, text }) => {
     if (!questionId) {
@@ -84,11 +96,30 @@ const SurveyEdit = () => {
   }
 
   return (
-    <>
+    <div className={styles.root}>
+      <div className={styles.pillbox}>
+        <img className={styles.logo} src={logo} alt="MetaSurvey" />
+        <Button
+          onClick={() => {
+            window.localStorage.removeItem('token');
+            window.location.reload();
+          }}
+        >
+          Logout
+        </Button>
+      </div>
       <section className={styles.section}>
         <Title>{title}</Title>
-          <Button icon="left" style={{ marginRight: 10 }} href={'../surveys'}>Back to list</Button>
-        <Button type={'danger'}>Delete</Button>
+        <Button
+          icon="left"
+          style={{ marginRight: 10 }}
+          href={'../surveys'}
+        >
+          Back to list
+        </Button>
+        <Button type={'danger'} onClick={deleteSurveyWithConfirm}>
+          Delete survey
+        </Button>
       </section>
       <section className={styles.section}>
         <Title level={3}>Edit logo</Title>
@@ -120,7 +151,7 @@ const SurveyEdit = () => {
           onItemDelete={deleteQuestion}
         />
       </section>
-    </>
+    </div>
   );
 };
 
