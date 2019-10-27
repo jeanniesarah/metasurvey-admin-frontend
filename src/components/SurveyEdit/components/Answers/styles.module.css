@@ -1,0 +1,8 @@
+.badge {
+  border: 1px solid #aaa;
+  color: #222;
+  display: inline-block;
+  border-radius: 20px;
+  padding: 0 8px;
+  cursor: pointer;
+}

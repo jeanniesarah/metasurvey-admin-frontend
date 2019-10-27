@@ -9,8 +9,8 @@ import SurveysList from './components/SurveysList';
 import SurveyEdit from './components/SurveyEdit';
 import ConfirmEmail from './components/ConfirmEmail';
 import JoinForm from 'components/AuthForm/JoinForm';
-// import axios from 'axios';
 import { Redirect } from 'react-router-dom';
+import 'antd/dist/antd.css';
 
 function App() {
   const isTokenValid = false;
