@@ -147,10 +147,10 @@ const SurveyEdit = () => {
         />
       </section>
       <section className={styles.section}>
-        <Stats />
+        <Stats surveyId={surveyId} />
       </section>
       <section className={styles.section}>
-        <Answers />
+        <Answers surveyId={surveyId} />
       </section>
       <section className={styles.section}>
         <Title level={3}>Edit questions</Title>
