@@ -10,7 +10,10 @@ const { Search } = Input;
 const SurveysList = () => {
   return (
     <div className={styles.root}>
-      <img className={styles.logo} src={logo} alt="MetaSurvey" />
+      <div className={styles.pillbox}>
+        <img className={styles.logo} src={logo} alt="MetaSurvey" />
+        <Button>Logout</Button>
+      </div>
       <section className={styles.section}>
         <Title>Create survey</Title>
         <Search
