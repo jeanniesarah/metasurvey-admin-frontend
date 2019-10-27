@@ -1,12 +1,12 @@
 import React from 'react';
 import { Input, Button } from 'antd';
 
-const Question = ({ question }) => {
+const Question = ({ question, style }) => {
   return (
-    <>
+    <div style={{ display: 'flex', ...style }}>
       <Input placeholder={'Question text'} value={question.text} />
-      <Button type="danger">X</Button>
-    </>
+      <Button style={{ marginLeft: 10 }} type="danger">X</Button>
+    </div>
   );
 };
 

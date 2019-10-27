@@ -1,14 +1,14 @@
 import React from 'react';
-import { Button } from 'antd';
+import { Button, Icon } from 'antd';
 import Question from './Question';
 
 const ListOfQuestions = ({ questions }) => {
   return (
     <>
       {questions.map(question => (
-        <Question key={question.id} question={question} />
+        <Question key={question.id} question={question} style={{ marginBottom: 10 }} />
       ))}
-      <Button>Add question</Button>
+      <Button style={{ marginTop: 10 }}><Icon type="plus" /> New question</Button>
     </>
   );
 };
