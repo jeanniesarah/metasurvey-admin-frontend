@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { isEmpty } from 'lodash';
 import { Spin, Typography } from 'antd';
 import Tooltip from '@material-ui/core/Tooltip';
 import Table from '@material-ui/core/Table';
@@ -10,6 +11,7 @@ import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import styles from './styles.module.css';
 import { getSurveyStatsAnswers } from '../../../../lib/api';
+import isMuiElement from '@material-ui/core/utils/isMuiElement';
 const { Title } = Typography;
 
 const useStyles = makeStyles({
@@ -47,6 +49,10 @@ export default ({ surveyId }) => {
   }
 
   const { questions, results } = stats;
+
+  if (isEmpty(results)) {
+    return null;
+  }
 
   return (
     <>
