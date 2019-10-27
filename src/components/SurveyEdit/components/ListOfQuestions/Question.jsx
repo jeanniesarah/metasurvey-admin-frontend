@@ -9,10 +9,13 @@ const Question = ({ question, style, onUpdate, onBlur, onDelete }) => {
              value={question.text}
              onChange={e => onUpdate({ questionId, text: e.target.value })}
              onBlur={e => onBlur({ questionId, text: e.target.value })}
+             style={!questionId ? { marginRight: 51 } : {}}
       />
-      <Button style={{ marginLeft: 10 }}
-              type="danger"
-              onClick={() => onDelete({ questionId })}>X</Button>
+        {questionId &&
+        <Button style={{marginLeft: 10}}
+                type="danger"
+                onClick={() => onDelete({questionId})}>X</Button>
+        }
     </div>
   );
 };
