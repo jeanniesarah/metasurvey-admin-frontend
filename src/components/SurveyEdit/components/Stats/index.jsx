@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { isEmpty } from 'lodash';
 import { Pie } from 'react-chartjs-2';
 import { Spin, Typography } from 'antd';
 import { getSurveyStatsPiechart } from '../../../../lib/api';
@@ -12,6 +13,10 @@ export default ({ surveyId }) => {
             .then(setStats);
 
         return <Spin size="large" />;
+    }
+
+    if (isEmpty(stats)) {
+        return null;
     }
 
   return (
