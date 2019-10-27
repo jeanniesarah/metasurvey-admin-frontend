@@ -8,6 +8,27 @@ const { Title } = Typography;
 const { Search } = Input;
 
 const SurveysList = () => {
+  const [surveys, setSurveys] = React.useState(undefined);
+  const token = window.localStorage.getItem('token');
+
+  if (!token) {
+    window.location.replace('https://getmetasurvey.com');
+  }
+
+  if (!surveys) {
+    fetch(`https://meta-survey-app.herokuapp.com/api/admin/survey`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token,
+      },
+    })
+      .then(body => body.json())
+      .then(setSurveys)
+      .catch(() => alert('Failed to load surveys'));
+
+    return null;
+  }
+
   return (
     <div className={styles.root}>
       <div className={styles.pillbox}>
@@ -27,12 +48,11 @@ const SurveysList = () => {
         <Title>Your surveys</Title>
 
         <div className={styles.surveys}>
-          <Button type="primary" shape="round" size="large">
-            <a href="survey/meta-octopus">meta-octopus</a>
-          </Button>
-          <Button type="primary" shape="round" size="large">
-            <a href="survey/super-chipmunk">super-chipmunk</a>
-          </Button>
+          {surveys.map(survey => (
+            <Button type="primary" shape="round" size="large">
+              <a href={`survey/${survey._id}`}>{survey.title}</a>
+            </Button>
+          ))}
         </div>
       </section>
     </div>
