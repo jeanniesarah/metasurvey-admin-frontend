@@ -12,6 +12,7 @@ import {
   updateSurveyQuestion,
   deleteSurveyQuestion,
 } from '../../lib/api';
+import { copyTextToClipboard } from '../../lib/clipboard';
 import styles from './styles.module.css';
 import Answers from './components/Answers';
 import Stats from './components/Stats';
@@ -118,6 +119,7 @@ const SurveyEdit = () => {
           Send this link to users:
           <br/>
           <a href={userSurveyUrl} target={'_blank'}>{userSurveyUrl}</a>
+          <Button icon="copy" style={{ marginLeft: 10 }} onClick={() => copyTextToClipboard(userSurveyUrl)} />
         </p>
         <Button
           icon="left"
