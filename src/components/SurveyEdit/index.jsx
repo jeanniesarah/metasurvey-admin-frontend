@@ -87,7 +87,8 @@ const SurveyEdit = () => {
     <>
       <section className={styles.section}>
         <Title>{title}</Title>
-        <Button>Delete</Button>
+          <Button icon="left" style={{ marginRight: 10 }} href={'../surveys'}>Back to list</Button>
+        <Button type={'danger'}>Delete</Button>
       </section>
       <section className={styles.section}>
         <Title level={3}>Edit logo</Title>

@@ -7,7 +7,7 @@ const Logo = () => {
     <div>
       <img
         src={logoSrc}
-        style={{ width: 100, height: 100 }}
+        style={{ width: 100, height: 100, marginRight: 10 }}
         alt={'Logo'}
       />
       <Button icon="upload" disabled></Button>
