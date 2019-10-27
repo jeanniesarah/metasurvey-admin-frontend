@@ -1,15 +1,15 @@
-import React from "react";
+import React from 'react';
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
   // Link
-} from "react-router-dom";
-import "antd/dist/antd.css";
-import SignUp from "./components/SignUp";
-import Login from "./components/Login";
-import SurveysList from "./components/SurveysList";
-import SurveyEdit from "./components/SurveyEdit";
+} from 'react-router-dom';
+import 'antd/dist/antd.css';
+import SignUp from './components/SignUp';
+import Login from './components/Login';
+import SurveysList from './components/SurveysList';
+import SurveyEdit from './components/SurveyEdit';
 
 function App() {
   return (

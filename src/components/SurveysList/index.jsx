@@ -1,8 +1,8 @@
-import React from "react";
-import { Typography, Input, Button } from "antd";
+import React from 'react';
+import { Typography, Input, Button } from 'antd';
 
-import logo from "./logo.png";
-import styles from "./styles.module.css";
+import logo from './logo.png';
+import styles from './styles.module.css';
 
 const { Title } = Typography;
 const { Search } = Input;
