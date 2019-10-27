@@ -19,14 +19,22 @@ export const getSurvey = (id) => {
 	});
 };
 
-export const saveSurvey = ({ title }) => {
-	console.log('Survey saved to server', title);
+export const saveSurvey = ({ surveyId, title }) => {
+	console.log('Survey saved to server', surveyId, title);
+	return Promise.resolve();
 };
 
-export const addSurveyQuestion = ({ text }) => {
-	console.log('Question added to server', text);
+export const addSurveyQuestion = ({ surveyId, questionId, text }) => {
+	console.log('Question added to server', surveyId, questionId, text);
+	return Promise.resolve({ id: 'new_id', text });
 };
 
-export const updateSurveyQuestion = ({ id, text }) => {
-	console.log('Question saved to server', id, text);
+export const updateSurveyQuestion = ({ surveyId, questionId, text }) => {
+	console.log('Question saved to server', surveyId, questionId, text);
+	return Promise.resolve();
+};
+
+export const deleteSurveyQuestion = ({ questionId }) => {
+	console.log('Question deleted from server', questionId);
+	return Promise.resolve();
 };
