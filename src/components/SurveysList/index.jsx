@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Input, Button } from 'antd';
+import { Typography, Input, Button, Spin } from 'antd';
 
 import logo from './logo.png';
 import styles from './styles.module.css';
@@ -26,14 +26,21 @@ const SurveysList = () => {
       .then(setSurveys)
       .catch(() => alert('Failed to load surveys'));
 
-    return null;
+    return <Spin size="large" />;
   }
 
   return (
     <div className={styles.root}>
       <div className={styles.pillbox}>
         <img className={styles.logo} src={logo} alt="MetaSurvey" />
-        <Button>Logout</Button>
+        <Button
+          onClick={() => {
+            window.localStorage.removeItem('token');
+            window.location.reload();
+          }}
+        >
+          Logout
+        </Button>
       </div>
       <section className={styles.section}>
         <Title>Create survey</Title>
@@ -41,7 +48,23 @@ const SurveysList = () => {
           placeholder="meta-octopus"
           enterButton="Create"
           size="large"
-          onSearch={value => console.log(value)}
+          onSearch={title => {
+            fetch(
+              `https://meta-survey-app.herokuapp.com/api/admin/survey`,
+              {
+                method: 'POST',
+                body: JSON.stringify({
+                  title,
+                }),
+                headers: {
+                  'Content-Type': 'application/json',
+                  Authorization: 'Bearer ' + token,
+                },
+              }
+            )
+              .then(() => window.location.reload())
+              .catch(() => alert('Failed to create survey'));
+          }}
         />
       </section>
       <section className={styles.section}>
@@ -49,7 +72,12 @@ const SurveysList = () => {
 
         <div className={styles.surveys}>
           {surveys.map(survey => (
-            <Button type="primary" shape="round" size="large">
+            <Button
+              type="primary"
+              shape="round"
+              size="large"
+              key={survey._id}
+            >
               <a href={`survey/${survey._id}`}>{survey.title}</a>
             </Button>
           ))}
