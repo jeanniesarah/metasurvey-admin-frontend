@@ -25,10 +25,10 @@ const SurveysList = () => {
 
         <div className={styles.surveys}>
           <Button type="primary" shape="round" size="large">
-            meta-octopus
+            <a href="survey/meta-octopus">meta-octopus</a>
           </Button>
           <Button type="primary" shape="round" size="large">
-            super-chipmunk
+            <a href="survey/super-chipmunk">super-chipmunk</a>
           </Button>
         </div>
       </section>
