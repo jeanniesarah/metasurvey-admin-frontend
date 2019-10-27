@@ -16,6 +16,21 @@ const SurveysList = () => {
     return <Redirect to="/login" />;
   }
 
+    const createFromTemplate = (templateId) => {
+        fetch(
+            `https://meta-survey-app.herokuapp.com/api/admin/templates/clone/${templateId}`,
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + token,
+                },
+            }
+        )
+            .then(() => window.location.reload())
+            .catch(() => alert('Failed to create survey'));
+    }
+
   if (!surveys) {
     fetch(`https://meta-survey-app.herokuapp.com/api/admin/survey`, {
       headers: {
@@ -67,7 +82,18 @@ const SurveysList = () => {
               .catch(() => alert('Failed to create survey'));
           }}
         />
-      </section>
+        <div style={{ marginTop: 10, textAlign: 'right' }}>
+            <div style={{ marginBottom: 10 }}>
+                <Button size="large" type="primary" onClick={() => createFromTemplate('5db55de9168ea235f0e7e616')}>Create for SaaS</Button>
+            </div>
+            <div style={{ marginBottom: 10 }}>
+                <Button size="large" type="primary" onClick={() => createFromTemplate('5db55de9168ea235f0e7e617')}>Create for Chrome Extension</Button>
+            </div>
+            <div style={{ marginBottom: 10 }}>
+                <Button size="large" type="primary" onClick={() => createFromTemplate('5db55de9168ea235f0e7e618')}>Create for General Purpose</Button>
+            </div>
+        </div>
+        </section>
       <section className={styles.section}>
         <Title>Your surveys</Title>
 
