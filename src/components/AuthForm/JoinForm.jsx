@@ -7,9 +7,9 @@ import './AuthForm.css';
 import './AuthFormHeader.css';
 import AuthFormHeader from './AuthFormHeader';
 import axios from 'axios';
-import { setAccessTokenCookie } from 'helpers/accessTokenCookie';
 import { openNotification } from '../../helpers/openNotification';
 import { REGISTER } from 'lib/auth';
+import { setToken } from 'lib/api';
 
 // interface Props {
 //     auth: any,
@@ -30,7 +30,15 @@ import { REGISTER } from 'lib/auth';
 //     validateUserAccessTokenInAuth: any
 // }
 
-class JoinForm extends Component<Props> {
+class JoinForm extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      token: null,
+    };
+  }
+
   componentWillMount() {}
 
   handleSubmit = e => {
@@ -45,10 +53,11 @@ class JoinForm extends Component<Props> {
           .then(response => {
             // handle success
             console.log(response);
-            let accessToken = response.data.key;
+            let accessToken = response.data.jwtToken;
 
             // Django returns the access token.
-            setAccessTokenCookie(accessToken);
+            setToken(accessToken);
+            this.setState({ token: accessToken });
 
             openNotification(
               'Welcome! 🦄',
@@ -84,6 +93,10 @@ class JoinForm extends Component<Props> {
 
   render() {
     const { getFieldDecorator } = this.props.form;
+
+    if (this.state.token) {
+      return <Redirect to="/" />;
+    }
 
     return (
       <AuthForm>
@@ -165,7 +178,7 @@ class JoinForm extends Component<Props> {
               </Button>
             </Form.Item>
           </Form>
-          <Link to="/auth/login" className="join-form__bottom_button">
+          <Link to="/login" className="join-form__bottom_button">
             <Button
               type="default"
               htmlType="button"

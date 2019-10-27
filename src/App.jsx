@@ -9,13 +9,15 @@ import SurveysList from './components/SurveysList';
 import SurveyEdit from './components/SurveyEdit';
 import ConfirmEmail from './components/ConfirmEmail';
 import JoinForm from 'components/AuthForm/JoinForm';
+import LoginForm from 'components/AuthForm/LoginForm';
 import { Redirect } from 'react-router-dom';
 import 'antd/dist/antd.css';
+import { validateToken } from 'lib/api';
 
 function App() {
-  const isTokenValid = false;
+  const isTokenValid = validateToken();
 
-  return (
+  return isTokenValid ? (
     <Router>
       <Switch>
         <Route path="/admin/surveys">
@@ -33,43 +35,16 @@ function App() {
           <ConfirmEmail />
         </Route>
         <Route path="/signup" render={props => <JoinForm />} />
-        {/* <Route
+        <Route
           exact
-          path={`${this.props.match.path}/login`}
-          render={props => (
-            <LoginForm
-              auth={this.props.auth}
-              toggleAccessTokenIsValid={
-                this.props.toggleAccessTokenIsValid
-              }
-              saveAccessTokenInState={
-                this.props.saveAccessTokenInState
-              }
-              loginToggleWaitingForServer={
-                this.props.loginToggleWaitingForServer
-              }
-              loginToggleInvalidEmail={
-                this.props.loginToggleInvalidEmail
-              }
-              loginToggleInvalidPassword={
-                this.props.loginToggleInvalidPassword
-              }
-              loginSetEmailMessage={this.props.loginSetEmailMessage}
-              loginSetPasswordMessage={
-                this.props.loginSetPasswordMessage
-              }
-              accessTokenToggleServerResponded={
-                this.props.accessTokenToggleServerResponded
-              }
-              validateUserAccessTokenInAuth={
-                this.props.validateUserAccessTokenInAuth
-              }
-            />
-          )}
-        /> */}
+          path={`/login`}
+          render={props => <LoginForm />}
+        />
         {/* <Redirect to="/404" /> */}
       </Switch>
     </Router>
+  ) : (
+    <Redirect to="/login" />
   );
 }
 

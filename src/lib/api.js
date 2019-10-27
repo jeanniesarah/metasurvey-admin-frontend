@@ -1,8 +1,21 @@
+import { VALIDATE } from 'lib/auth';
+
 const apiUrl = 'https://meta-survey-app.herokuapp.com/api';
 const getToken = () => window.localStorage.getItem('token');
 
+export const setToken = value =>
+  window.localStorage.setItem('token', value);
+
 export const getListOfSurveys = () => {
   return {};
+};
+
+export const validateToken = () => {
+  return fetch(VALIDATE, {
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
+  }).then(body => body.json());
 };
 
 export const getSurvey = id => {

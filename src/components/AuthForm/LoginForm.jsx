@@ -1,20 +1,16 @@
 import React, { Component } from 'react';
-import { Button, Checkbox, Form, Icon, Input } from 'antd';
+import { Button, Form, Icon, Input } from 'antd';
 import './LoginForm.css';
-import '../../data/urls';
 import { Link, Redirect } from 'react-router-dom';
 import AuthForm from './AuthForm';
 import './AuthForm.css';
 import './AuthFormHeader.css';
 import AuthFormHeader from './AuthFormHeader';
-import { string } from 'prop-types';
-import setInputStatus from '../../helpers/setInputStatus';
 import axios from 'axios';
-import { api } from '../../data/urls';
-import objectToFormData from '../../helpers/objectToFormData';
-import { setAccessTokenCookie } from '../../helpers/auth/accessTokenCookie';
+// import { setAccessTokenCookie } from 'helpers/accessTokenCookie';
 import { openNotification } from '../../helpers/openNotification';
-import { messages } from '../../data/messages';
+import { setToken } from 'lib/api';
+import { LOGIN } from 'lib/auth';
 
 // interface Props {
 //     auth: any,
@@ -33,86 +29,45 @@ import { messages } from '../../data/messages';
 // }
 
 class LoginForm extends Component {
-  componentWillMount() {
-    this.props.validateUserAccessTokenInAuth();
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      token: null,
+    };
   }
 
-  clearFieldsMessages() {
-    this.props.loginToggleInvalidEmail(false);
-    this.props.loginToggleInvalidPassword(false);
+  componentWillMount() {}
 
-    this.props.loginSetEmailMessage(undefined);
-    this.props.loginSetPasswordMessage(undefined);
-  }
+  clearFieldsMessages() {}
 
   handleSubmit = e => {
     e.preventDefault();
 
-    // When submit the form - all red fields are back to normal.
-    // When submit the form - all error messages are cleared.
-    this.clearFieldsMessages();
-
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        this.props.loginToggleWaitingForServer(true);
         axios
-          .post(api.auth.login, objectToFormData(values))
+          .post(LOGIN, values)
           .then(response => {
             // handle success
             // Django returns the access token.
-            let accessToken = response.data.key;
 
-            // We save the token in a Cookie to save the user session. When a user enter the app, we check this cookie. If the cookie valid - we fetch a user data and display it. If the cookie is invalid - we erase it and require to login/sign up.
-            setAccessTokenCookie(accessToken);
-
-            // After the token is in cookies, we can save the token in the state for further requests authorization.
-            // IMPORTANT: save the token in cookies before changing the token validation process state because you may redirect user to the dashboard with non-set cookie and it will result in redirect back to login page and loop.
-            this.props.saveAccessTokenInState(accessToken);
-
-            // Since we just received a fresh token from the server, no need to validate it. We are sure it's valid.
-            // We should keep in store that the token is valid.
-            this.props.toggleAccessTokenIsValid(true);
-            // this.props.accessTokenToggleServerResponded(true);
+            let accessToken = response.data.jwtToken;
+            setToken(accessToken);
+            this.setState({ token: accessToken });
           })
           .catch(error => {
             // handle error
             try {
               let errorData = error.response.data;
-
-              if (errorData.email !== undefined) {
-                let message = errorData.email.join(' ');
-                this.props.loginSetEmailMessage(message);
-                this.props.loginToggleInvalidEmail(true);
-              }
-
-              if (errorData.password !== undefined) {
-                let message = errorData.password.join(' ');
-                this.props.loginSetPasswordMessage(message);
-                this.props.loginToggleInvalidPassword(true);
-              }
-
-              if (errorData.non_field_errors !== undefined) {
-                // Usually "Unable to log in with provided credentials."
-                let message = errorData.non_field_errors.join(' ');
-
-                this.props.loginSetEmailMessage(message);
-                this.props.loginToggleInvalidEmail(true);
-
-                this.props.loginSetPasswordMessage(message);
-                this.props.loginToggleInvalidPassword(true);
-              }
             } catch (e) {
               openNotification(
                 'Server error',
-                messages.errors.other.serverUnavailable,
+                'Login error',
                 'OK',
                 'error'
               );
             }
-          })
-          .then(response => {
-            // always executed
-            this.props.loginToggleWaitingForServer(false);
           });
       }
     });
@@ -121,45 +76,20 @@ class LoginForm extends Component {
   render() {
     const { getFieldDecorator } = this.props.form;
 
-    if (
-      this.props.auth.accessTokenValidated === true &&
-      this.props.auth.isAccessTokenValid === true
-    ) {
+    if (this.state.token) {
       return <Redirect to="/" />;
     }
 
     return (
       <AuthForm>
-        {/*<ValidateUser auth={this.props.auth}*/}
-        {/*toggleAccessTokenIsValid={this.props.toggleAccessTokenIsValid}*/}
-        {/*saveAccessTokenInState={this.props.saveAccessTokenInState}*/}
-        {/*redirectToHome={true}*/}
-        {/*redirectToLogin={false}*/}
-        {/*accessTokenToggleServerResponded={this.props.accessTokenToggleServerResponded}*/}
-        {/*/>*/}
         <div className="login-form">
           <Form
             onSubmit={this.handleSubmit}
             className="login-form__form"
           >
-            <AuthFormHeader title="Sign in">
-              <Link
-                className="login-form__forgot"
-                to="/auth/restore-pass"
-                onClick={() => {
-                  this.clearFieldsMessages();
-                }}
-              >
-                Forgot password?
-              </Link>
-            </AuthFormHeader>
+            <AuthFormHeader title="Sign in"></AuthFormHeader>
 
-            <Form.Item
-              validateStatus={setInputStatus(
-                this.props.auth.login.isInvalidEmail
-              )}
-              help={this.props.auth.login.emailMessage}
-            >
+            <Form.Item>
               {getFieldDecorator('email', {
                 // rules: [{ required: true, message: 'Please input your email!' }],
               })(
@@ -180,10 +110,10 @@ class LoginForm extends Component {
               )}
             </Form.Item>
             <Form.Item
-              validateStatus={setInputStatus(
-                this.props.auth.login.isInvalidPassword
-              )}
-              help={this.props.auth.login.passwordMessage}
+            // validateStatus={setInputStatus(
+            //   this.props.auth.login.isInvalidPassword
+            // )}
+            // help={this.props.auth.login.passwordMessage}
             >
               {getFieldDecorator('password', {
                 // rules: [{ required: true, message: 'Please input your password!' }],
@@ -214,7 +144,6 @@ class LoginForm extends Component {
                 size="large"
                 icon="login"
                 type="primary"
-                loading={this.props.auth.login.isWaitingForServer}
                 htmlType="submit"
                 className="login-form__button"
               >
@@ -222,14 +151,12 @@ class LoginForm extends Component {
               </Button>
             </Form.Item>
           </Form>
-          <Link to="/auth/join" className="login-form__bottom_button">
+          <Link to="/signup" className="login-form__bottom_button">
             <Button
               type="default"
               htmlType="button"
               className=""
-              onClick={() => {
-                this.clearFieldsMessages();
-              }}
+              onClick={() => {}}
             >
               Register for free
             </Button>
