@@ -1,0 +1,10 @@
+.join-form__bottom_button{
+    /* not DRY :( */
+    display: inline-block;
+}
+.join-form__agreements{
+    max-width: 350px;
+    margin-bottom: 30px;
+    margin-left: auto;
+    margin-right: auto;
+}

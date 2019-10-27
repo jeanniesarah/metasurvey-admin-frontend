@@ -1,0 +1,4 @@
+.restore-pass-form__bottom_button{
+    /* not DRY :( */
+    display: inline-block;
+}

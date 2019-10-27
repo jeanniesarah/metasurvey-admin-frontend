@@ -1,0 +1,4 @@
+.set-new-pass-form__bottom_button{
+    /* not DRY :( */
+    display: inline-block;
+}

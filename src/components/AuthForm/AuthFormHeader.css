@@ -1,0 +1,23 @@
+.auth-form-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 20px;
+}
+.auth-form-header__left{
+
+}
+.auth-form-header__title{
+    display: inline-block;
+
+    margin-right: 7px;
+    margin-bottom: 0;
+}
+.auth-form-header__subtitle{
+    font-size: 10px;
+    opacity: 0.8;
+}
+.auth-form-header__right{
+
+}
