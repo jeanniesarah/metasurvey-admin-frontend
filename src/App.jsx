@@ -5,7 +5,7 @@ import {
   Route
   // Link
 } from "react-router-dom";
-import 'antd/dist/antd.css'
+import "antd/dist/antd.css";
 import SignUp from "./components/SignUp";
 import Login from "./components/Login";
 import SurveysList from "./components/SurveysList";
@@ -14,7 +14,6 @@ import SurveyEdit from "./components/SurveyEdit";
 function App() {
   return (
     <Router>
-      <h1>MetaSurvey</h1>
       <Switch>
         <Route path="/signup">
           <SignUp />
