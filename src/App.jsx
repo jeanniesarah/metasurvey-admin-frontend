@@ -5,7 +5,7 @@ import {
   Route
   // Link
 } from "react-router-dom";
-import "./App.css";
+import 'antd/dist/antd.css'
 import SignUp from "./components/SignUp";
 import Login from "./components/Login";
 import SurveysList from "./components/SurveysList";
