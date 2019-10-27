@@ -8,6 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
+import styles from './styles.module.css';
 const { Title } = Typography;
 
 const useStyles = makeStyles({
@@ -42,22 +43,22 @@ export default props => {
             <TableRow>
               <TableCell align="right">
                 <Tooltip title="Add" placement="top">
-                  <span>1</span>
+                  <span className={styles.badge}>1</span>
                 </Tooltip>
               </TableCell>
               <TableCell align="right">
                 <Tooltip title="Add" placement="top">
-                  <span>2</span>
+                  <span className={styles.badge}>2</span>
                 </Tooltip>
               </TableCell>
               <TableCell align="right">
                 <Tooltip title="Add" placement="top">
-                  <span>3</span>
+                  <span className={styles.badge}>3</span>
                 </Tooltip>
               </TableCell>
               <TableCell align="right">
                 <Tooltip title="Add" placement="top">
-                  <span>4</span>
+                  <span className={styles.badge}>4</span>
                 </Tooltip>
               </TableCell>
               <TableCell>Comment</TableCell>
