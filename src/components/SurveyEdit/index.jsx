@@ -18,11 +18,15 @@ import Stats from './components/Stats';
 import logo from '../SurveysList/logo.png';
 const { Title } = Typography;
 
+const userSurveyDomain = 'https://public.getmetasurvey.com';
+
 const SurveyEdit = () => {
   let { id: surveyId } = useParams();
 
   const [title, setTitle] = useState('');
   const [survey, setSurvey] = useState(undefined);
+
+  const userSurveyUrl = `${userSurveyDomain}/?survey_id=${surveyId}`;
 
   const deleteSurveyWithConfirm = () => {
     /* eslint-disable no-restricted-globals */
@@ -110,6 +114,11 @@ const SurveyEdit = () => {
       </div>
       <section className={styles.section}>
         <Title>{title}</Title>
+        <p>
+          Send this link to users:
+          <br/>
+          <a href={userSurveyUrl} target={'_blank'}>{userSurveyUrl}</a>
+        </p>
         <Button
           icon="left"
           style={{ marginRight: 10 }}

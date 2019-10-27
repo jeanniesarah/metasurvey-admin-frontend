@@ -18,6 +18,9 @@ function App() {
   return (
     <Router>
       <Switch>
+        <Route exact path="/" >
+          <Redirect to="/admin/surveys"/>
+        </Route>
         <Route path="/admin/surveys">
           <SurveysList />
         </Route>
