@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { remove } from 'lodash';
 import { useParams } from 'react-router-dom';
-import { Input, Spin, Typography } from 'antd';
+import { Input, Spin, Typography, Button } from 'antd';
 import ListOfQuestions from './components/ListOfQuestions';
 import Logo from './components/Logo';
 import { saveSurvey, getSurvey, addSurveyQuestion, updateSurveyQuestion, deleteSurveyQuestion } from '../../lib/api';
@@ -84,6 +84,7 @@ const SurveyEdit = () => {
     <>
       <section className={styles.section}>
         <Title>{window.location.href.split('/').reverse()[0]}</Title>
+        <Button>Delete</Button>
       </section>
       <section className={styles.section}>
         <Title level={3}>Edit logo</Title>
