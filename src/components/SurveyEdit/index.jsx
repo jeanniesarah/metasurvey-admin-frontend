@@ -36,6 +36,9 @@ const SurveyEdit = () => {
       <section className={styles.section}>
         <Title>Stats</Title>
       </section>
+      <section className={styles.section}>
+        <Title>Answers</Title>
+      </section>
     </>
   );
 };
