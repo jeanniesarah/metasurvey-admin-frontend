@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { Input, Spin, Typography } from 'antd';
-import ListOfQuestions from './components/ListOfQuestions';
-import Logo from './components/Logo';
-import { saveSurvey, getSurvey } from '../../lib/api';
-import styles from './styles.module.css';
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+import { Input, Spin, Typography } from "antd";
+import ListOfQuestions from "./components/ListOfQuestions";
+import Logo from "./components/Logo";
+import { saveSurvey, getSurvey } from "../../lib/api";
+import styles from "./styles.module.css";
+import { Pie } from "react-chartjs-2";
 
 const { Title } = Typography;
 const SurveyEdit = () => {
   let { id } = useParams();
 
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState("");
   const [survey, setSurvey] = useState(undefined);
 
   if (!survey) {
@@ -42,14 +43,27 @@ const SurveyEdit = () => {
         />
       </section>
       <section className={styles.section}>
-        <Title level={3}>Edit questions</Title>
-        <ListOfQuestions questions={survey.questions} />
-      </section>
-      <section className={styles.section}>
         <Title>Stats</Title>
+        <Pie
+          data={{
+            labels: ["Red", "Green", "Yellow"],
+            datasets: [
+              {
+                data: [300, 50, 100]
+              }
+            ]
+          }}
+          legend={{
+            position: "right"
+          }}
+        />
       </section>
       <section className={styles.section}>
         <Title>Answers</Title>
+      </section>
+      <section className={styles.section}>
+        <Title level={3}>Edit questions</Title>
+        <ListOfQuestions questions={survey.questions} />
       </section>
     </>
   );
