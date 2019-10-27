@@ -27,7 +27,7 @@ const SurveyEdit = () => {
   return (
     <>
       <section className={styles.section}>
-        <Title>Edit survey</Title>
+        <Title>{window.location.href.split('/').reverse()[0]}</Title>
       </section>
       <section className={styles.section}>
         <Title level={3}>Edit logo</Title>
