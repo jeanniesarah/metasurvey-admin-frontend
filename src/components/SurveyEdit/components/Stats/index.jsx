@@ -15,9 +15,10 @@ export default ({ surveyId }) => {
         return <Spin size="large" />;
     }
 
-    if (isEmpty(stats)) {
+    if (isEmpty(stats) || !Array.isArray(stats)) {
         return null;
     }
+
 
   return (
     <>
