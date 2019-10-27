@@ -11,11 +11,18 @@ export const getListOfSurveys = () => {
 };
 
 export const validateToken = () => {
-  return fetch(VALIDATE, {
+  let isValid = true;
+
+  fetch(VALIDATE, {
     headers: {
       Authorization: `Bearer ${getToken()}`,
     },
-  }).then(body => body.json());
+  }).then(body => {
+    // isValid =
+    body.json();
+  });
+
+  return isValid;
 };
 
 export const getSurvey = id => {
