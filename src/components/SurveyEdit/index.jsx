@@ -5,8 +5,8 @@ import ListOfQuestions from './components/ListOfQuestions';
 import Logo from './components/Logo';
 import { saveSurvey, getSurvey } from '../../lib/api';
 import styles from './styles.module.css';
-import { Pie } from 'react-chartjs-2';
 import Answers from './components/Answers';
+import Stats from './components/Stats';
 const { Title } = Typography;
 
 const SurveyEdit = () => {
@@ -44,20 +44,7 @@ const SurveyEdit = () => {
         />
       </section>
       <section className={styles.section}>
-        <Title>Stats</Title>
-        <Pie
-          data={{
-            labels: ['Red', 'Green', 'Yellow'],
-            datasets: [
-              {
-                data: [300, 50, 100],
-              },
-            ],
-          }}
-          legend={{
-            position: 'right',
-          }}
-        />
+        <Stats />
       </section>
       <section className={styles.section}>
         <Answers />
