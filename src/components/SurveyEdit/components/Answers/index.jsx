@@ -15,6 +15,8 @@ const useStyles = makeStyles({
   root: {
     width: '100%',
     overflowX: 'auto',
+    maxHeight: 500,
+    overflow: 'auto',
   },
   table: {
     minWidth: 650,
@@ -38,25 +40,29 @@ export default props => {
     <>
       <Title>Answers</Title>
       <Paper className={classes.root}>
-        <Table className={classes.table} aria-label="simple table">
+        <Table
+          className={classes.table}
+          aria-label="simple table"
+          stickyHeader
+        >
           <TableHead>
             <TableRow>
-              <TableCell align="right">
+              <TableCell>
                 <Tooltip title="Add" placement="top">
                   <span className={styles.badge}>1</span>
                 </Tooltip>
               </TableCell>
-              <TableCell align="right">
+              <TableCell>
                 <Tooltip title="Add" placement="top">
                   <span className={styles.badge}>2</span>
                 </Tooltip>
               </TableCell>
-              <TableCell align="right">
+              <TableCell>
                 <Tooltip title="Add" placement="top">
                   <span className={styles.badge}>3</span>
                 </Tooltip>
               </TableCell>
-              <TableCell align="right">
+              <TableCell>
                 <Tooltip title="Add" placement="top">
                   <span className={styles.badge}>4</span>
                 </Tooltip>
@@ -67,10 +73,10 @@ export default props => {
           <TableBody>
             {rows.map(row => (
               <TableRow key={row.name}>
-                <TableCell align="right">{row.calories}</TableCell>
-                <TableCell align="right">{row.fat}</TableCell>
-                <TableCell align="right">{row.carbs}</TableCell>
-                <TableCell align="right">{row.protein}</TableCell>
+                <TableCell>{row.calories}</TableCell>
+                <TableCell>{row.fat}</TableCell>
+                <TableCell>{row.carbs}</TableCell>
+                <TableCell>{row.protein}</TableCell>
                 <TableCell component="th" scope="row">
                   {row.name}
                 </TableCell>
