@@ -1,5 +1,5 @@
-import React from 'react';
-import { Typography } from 'antd';
+import React, { useState } from 'react';
+import { Spin, Typography } from 'antd';
 import Tooltip from '@material-ui/core/Tooltip';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -9,6 +9,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import styles from './styles.module.css';
+import { getSurveyStatsAnswers } from '../../../../lib/api';
 const { Title } = Typography;
 
 const useStyles = makeStyles({
@@ -34,8 +35,19 @@ const rows = [
   createData('Gingerbread', '✓', ' ', '✓', ' '),
 ];
 
-export default props => {
+export default ({ surveyId }) => {
+  const [stats, setStats] = useState(undefined);
+
   const classes = useStyles();
+  if (!stats) {
+    getSurveyStatsAnswers(surveyId)
+        .then(setStats);
+
+    return <Spin size="large" />;
+  }
+
+  const { questions, results } = stats;
+
   return (
     <>
       <Title>Answers</Title>
@@ -47,38 +59,20 @@ export default props => {
         >
           <TableHead>
             <TableRow>
-              <TableCell>
-                <Tooltip title="Add" placement="top">
-                  <span className={styles.badge}>1</span>
+              {questions.map((question, index) => <TableCell>
+                <Tooltip key={question._id} title={question.text} placement="top">
+                  <span className={styles.badge}>{index + 1}</span>
                 </Tooltip>
-              </TableCell>
-              <TableCell>
-                <Tooltip title="Add" placement="top">
-                  <span className={styles.badge}>2</span>
-                </Tooltip>
-              </TableCell>
-              <TableCell>
-                <Tooltip title="Add" placement="top">
-                  <span className={styles.badge}>3</span>
-                </Tooltip>
-              </TableCell>
-              <TableCell>
-                <Tooltip title="Add" placement="top">
-                  <span className={styles.badge}>4</span>
-                </Tooltip>
-              </TableCell>
+              </TableCell>)}
               <TableCell>Comment</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map(row => (
-              <TableRow key={row.name}>
-                <TableCell>{row.calories}</TableCell>
-                <TableCell>{row.fat}</TableCell>
-                <TableCell>{row.carbs}</TableCell>
-                <TableCell>{row.protein}</TableCell>
+            {results.map((row) => (
+              <TableRow key={row._id}>
+                {row.answers.map(answer => <TableCell>{ answer ? '✓' : ''}</TableCell>)}
                 <TableCell component="th" scope="row">
-                  {row.name}
+                  {row.comment}
                 </TableCell>
               </TableRow>
             ))}
