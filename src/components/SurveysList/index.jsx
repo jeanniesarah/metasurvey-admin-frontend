@@ -1,6 +1,7 @@
 import React from 'react';
 import { Typography, Input, Button, Spin } from 'antd';
 import { Redirect } from 'react-router-dom';
+import { addSurvey, addSurveyFromTemplate } from '../../lib/api';
 
 import logo from './logo.png';
 import styles from './styles.module.css';
@@ -17,17 +18,8 @@ const SurveysList = () => {
   }
 
     const createFromTemplate = (templateId) => {
-        fetch(
-            `https://meta-survey-app.herokuapp.com/api/admin/templates/clone/${templateId}`,
-            {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: 'Bearer ' + token,
-                },
-            }
-        )
-            .then(() => window.location.reload())
+        addSurveyFromTemplate({ templateId })
+            .then(({ _id }) => { document.location.href = `survey/${_id}`; })
             .catch(() => alert('Failed to create survey'));
     }
 
@@ -65,20 +57,8 @@ const SurveysList = () => {
           enterButton="Create"
           size="large"
           onSearch={title => {
-            fetch(
-              `https://meta-survey-app.herokuapp.com/api/admin/survey`,
-              {
-                method: 'POST',
-                body: JSON.stringify({
-                  title,
-                }),
-                headers: {
-                  'Content-Type': 'application/json',
-                  Authorization: 'Bearer ' + token,
-                },
-              }
-            )
-              .then(() => window.location.reload())
+              addSurvey({ title })
+              .then(({ _id }) => { document.location.href = `survey/${_id}`; })
               .catch(() => alert('Failed to create survey'));
           }}
         />

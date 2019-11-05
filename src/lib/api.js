@@ -2,6 +2,13 @@ import { VALIDATE } from 'lib/auth';
 
 const apiUrl = 'https://meta-survey-app.herokuapp.com/api';
 const getToken = () => window.localStorage.getItem('token');
+const getAuthHeaders = () => ({
+  Authorization: `Bearer ${getToken()}`,
+});
+const getHeaders = () => ({
+  ...getAuthHeaders(),
+  'Content-Type': 'application/json',
+});
 
 export const setToken = value =>
   window.localStorage.setItem('token', value);
@@ -14,9 +21,7 @@ export const validateToken = () => {
   let isValid = true;
 
   fetch(VALIDATE, {
-    headers: {
-      Authorization: `Bearer ${getToken()}`,
-    },
+    headers: getAuthHeaders(),
   }).then(body => {
     // isValid =
     body.json();
@@ -27,38 +32,41 @@ export const validateToken = () => {
 
 export const getSurvey = id => {
   return fetch(`${apiUrl}/admin/survey/${id}`, {
-    headers: {
-      Authorization: `Bearer ${getToken()}`,
-      'Content-Type': 'application/json',
-    },
+    headers: getHeaders(),
   }).then(body => body.json());
 };
 
 export const getSurveyStatsPiechart = id => {
   return fetch(`${apiUrl}/admin/stat/${id}/piechart`, {
-    headers: {
-      Authorization: `Bearer ${getToken()}`,
-      'Content-Type': 'application/json',
-    },
+    headers: getHeaders(),
   }).then(body => body.json());
 };
 
 export const getSurveyStatsAnswers = id => {
   return fetch(`${apiUrl}/admin/stat/${id}/table`, {
-    headers: {
-      Authorization: `Bearer ${getToken()}`,
-      'Content-Type': 'application/json',
-    },
+    headers: getHeaders(),
+  }).then(body => body.json());
+};
+
+export const addSurvey = ({ title }) => {
+  return fetch(`${apiUrl}/admin/survey`, {
+    method: 'POST',
+    headers: getHeaders(),
+    body: JSON.stringify({ title }),
+  }).then(body => body.json());
+};
+
+export const addSurveyFromTemplate = ({ title, templateId }) => {
+  return fetch(`${apiUrl}/admin/templates/clone/${templateId}`, {
+    method: 'GET',
+    headers: getHeaders(),
   }).then(body => body.json());
 };
 
 export const saveSurvey = ({ surveyId, title }) => {
   return fetch(`${apiUrl}/admin/survey/${surveyId}`, {
     method: 'PATCH',
-    headers: {
-      Authorization: `Bearer ${getToken()}`,
-      'Content-Type': 'application/json',
-    },
+    headers: getHeaders(),
     body: JSON.stringify({ title }),
   }).then(body => {
     // console.log('Survey saved to server', surveyId, title);
@@ -68,10 +76,7 @@ export const saveSurvey = ({ surveyId, title }) => {
 export const deleteSurvey = ({ surveyId }) => {
   return fetch(`${apiUrl}/admin/survey/${surveyId}`, {
     method: 'DELETE',
-    headers: {
-      Authorization: `Bearer ${getToken()}`,
-      'Content-Type': 'application/json',
-    },
+    headers: getHeaders(),
   }).then(body => {
     // console.log('Survey deleted from server', surveyId);
   });
@@ -80,10 +85,7 @@ export const deleteSurvey = ({ surveyId }) => {
 export const addSurveyQuestion = ({ surveyId, text }) => {
   return fetch(`${apiUrl}/admin/survey/${surveyId}/question`, {
     method: 'POST',
-    headers: {
-      Authorization: `Bearer ${getToken()}`,
-      'Content-Type': 'application/json',
-    },
+    headers: getHeaders(),
     body: JSON.stringify({ text }),
   })
     .then(body => body.json())
@@ -103,10 +105,7 @@ export const updateSurveyQuestion = ({
     `${apiUrl}/admin/survey/${surveyId}/question/${questionId}`,
     {
       method: 'PATCH',
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
-        'Content-Type': 'application/json',
-      },
+      headers: getHeaders(),
       body: JSON.stringify({ text }),
     }
   ).then(body => {
@@ -120,9 +119,7 @@ export const deleteSurveyQuestion = ({ surveyId, questionId }) => {
     `${apiUrl}/admin/survey/${surveyId}/question/${questionId}`,
     {
       method: 'DELETE',
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
-      },
+      headers: getAuthHeaders(),
     }
   ).then(body => {
     // console.log('Question deleted from server', questionId);
