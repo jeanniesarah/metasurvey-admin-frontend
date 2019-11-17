@@ -9,10 +9,10 @@ const HeaderContent = () => {
 	return <>
 		<div style={{ float: 'left' }}>
 			<img src={logo} style={{ width: 232, height: 24, marginRight: 12 }} />
-			<LinkDecorated href={'/'}>0.3.1</LinkDecorated>
+			{/*<LinkDecorated href={'/'}>0.3.1</LinkDecorated>*/}
 		</div>
 		<div style={{ float: 'right' }}>
-			<LinkDecorated href={'/'}>Startup Name</LinkDecorated>
+			{/*<LinkDecorated href={'/'}>Startup Name</LinkDecorated>*/}
 			<Button
 				default
 				style={{

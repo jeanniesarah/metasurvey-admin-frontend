@@ -10,11 +10,13 @@ const FooterContent = () => {
 		<div style={{float: 'right'}}>
 			<Button
 				type={'link'}
+				href={'mailto:indiehackersspb@gmail.com'}
 				className={styles.buttonHoverHack}
 				style={{ color: '#6A6A6A' }}
 				>Support</Button>
 			<Button
 				type={'link'}
+				href={'mailto:indiehackersspb@gmail.com'}
 				className={styles.buttonHoverHack}
 				style={{ color: '#FF3399' }}
 				>Report bug</Button>
