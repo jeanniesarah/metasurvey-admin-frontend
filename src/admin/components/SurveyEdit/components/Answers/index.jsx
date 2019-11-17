@@ -10,7 +10,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import styles from './styles.module.css';
-import { getSurveyStatsAnswers } from '../../../../lib/api';
+import { getSurveyStatsAnswers } from '../../../../../lib/api';
 import isMuiElement from '@material-ui/core/utils/isMuiElement';
 const { Title } = Typography;
 

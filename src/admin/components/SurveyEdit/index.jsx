@@ -11,8 +11,8 @@ import {
   addSurveyQuestion,
   updateSurveyQuestion,
   deleteSurveyQuestion,
-} from '../../lib/api';
-import { copyTextToClipboard } from '../../lib/clipboard';
+} from '../../../lib/api';
+import { copyTextToClipboard } from '../../../lib/clipboard';
 import styles from './styles.module.css';
 import Answers from './components/Answers';
 import Stats from './components/Stats';

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { isEmpty } from 'lodash';
 import { Pie } from 'react-chartjs-2';
 import { Spin, Typography } from 'antd';
-import { getSurveyStatsPiechart } from '../../../../lib/api';
+import { getSurveyStatsPiechart } from '../../../../../lib/api';
 const { Title } = Typography;
 
 export default ({ surveyId }) => {

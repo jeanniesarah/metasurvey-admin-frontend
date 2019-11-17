@@ -5,11 +5,10 @@ import {
   Route,
 } from 'react-router-dom';
 import 'antd/dist/antd.css';
-import SurveysList from './components/SurveysList';
-import SurveyEdit from './components/SurveyEdit';
 import ConfirmEmail from './components/ConfirmEmail';
 import JoinForm from 'components/AuthForm/JoinForm';
 import LoginForm from 'components/AuthForm/LoginForm';
+import Admin from 'admin';
 import { Redirect } from 'react-router-dom';
 import 'antd/dist/antd.css';
 import { validateToken } from 'lib/api';
@@ -23,11 +22,8 @@ function App() {
         <Route exact path="/">
           <Redirect to="/admin/surveys" />
         </Route>
-        <Route path="/admin/surveys">
-          <SurveysList />
-        </Route>
-        <Route path="/admin/survey/:id">
-          <SurveyEdit />
+        <Route path="/admin">
+          <Admin />
         </Route>
         <Route
           path="/confirm-email"
