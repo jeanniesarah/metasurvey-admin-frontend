@@ -1,7 +1,7 @@
 import React from 'react';
 import { Typography, Input, Button, Spin } from 'antd';
 import { Redirect } from 'react-router-dom';
-import { addSurvey, addSurveyFromTemplate } from '../../lib/api';
+import { addSurvey, addSurveyFromTemplate } from '../../../lib/api';
 
 import logo from './logo.png';
 import styles from './styles.module.css';
