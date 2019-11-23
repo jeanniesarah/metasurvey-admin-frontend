@@ -1,5 +1,5 @@
 import React from 'react';
-import {Input, Button, message } from 'antd';
+import {Input, Button, message, Icon} from 'antd';
 
 const Question = ({ question, style, onUpdate, saveQuestion, onDelete }) => {
     const { id: questionId } = question;
@@ -21,7 +21,7 @@ const Question = ({ question, style, onUpdate, saveQuestion, onDelete }) => {
                 onClick={() => {
                     onDelete({questionId});
                     message.success('Successfully removed the question.');
-                }}>Delete</Button>
+                }}><Icon type="delete" /></Button>
         }
     </div>
   );
