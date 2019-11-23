@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input, Button } from 'antd';
+import { Input, Button, message } from 'antd';
 
 const Question = ({ question, style, onUpdate, onBlur, onDelete }) => {
     const { id: questionId } = question;
@@ -15,7 +15,10 @@ const Question = ({ question, style, onUpdate, onBlur, onDelete }) => {
         {questionId &&
         <Button style={{marginLeft: 10}}
                 type="danger"
-                onClick={() => onDelete({questionId})}>X</Button>
+                onClick={() => {
+                    onDelete({questionId});
+                    message.success('Successfully removed the question.');
+                }}>Delete</Button>
         }
     </div>
   );
