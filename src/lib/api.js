@@ -1,4 +1,5 @@
 import { VALIDATE } from 'lib/auth';
+import { message } from 'antd';
 
 const apiUrl = 'https://meta-survey-app.herokuapp.com/api';
 const getToken = () => window.localStorage.getItem('token');
@@ -69,6 +70,7 @@ export const saveSurvey = ({ surveyId, title }) => {
     headers: getHeaders(),
     body: JSON.stringify({ title }),
   }).then(body => {
+      message.success('Successfully changed title to "' + title + '".');
     // console.log('Survey saved to server', surveyId, title);
   });
 };

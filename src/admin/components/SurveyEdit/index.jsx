@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { remove } from 'lodash';
 import { useParams } from 'react-router-dom';
-import { Input, Spin, Typography, Button } from 'antd';
+import {Input, Spin, Typography, Button, Search} from 'antd';
 import ListOfQuestions from './components/ListOfQuestions';
 import Logo from './components/Logo';
 import {
@@ -22,6 +22,8 @@ const { Title } = Typography;
 const userSurveyDomain = 'https://public.getmetasurvey.com';
 
 const SurveyEdit = () => {
+  const { Search } = Input;
+
   let { id: surveyId } = useParams();
 
   const [title, setTitle] = useState('');
@@ -128,12 +130,17 @@ const SurveyEdit = () => {
       {/*</section>*/}
       <section className={styles.section}>
         <Title level={3}>Edit title</Title>
-        <Input
-          size="large"
-          placeholder="Title"
-          value={title}
-          onChange={e => setTitle(e.target.value)}
-          onBlur={() => saveSurvey({ surveyId, title })}
+      <Search
+        size="large"
+        placeholder="Enter survey title"
+        value={title}
+        onSearch={() => {
+            saveSurvey({ surveyId, title });
+        }}
+        onChange={e => setTitle(e.target.value)}
+        style={{ width: 400 }}
+        enterButton="Save"
+
         />
       </section>
       <section className={styles.section}>
