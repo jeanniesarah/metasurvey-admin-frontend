@@ -121,10 +121,11 @@ const SurveyEdit = () => {
           Delete survey
         </Button>
       </section>
-      <section className={styles.section}>
-        <Title level={3}>Edit logo</Title>
-        <Logo />
-      </section>
+      {/*<section className={styles.section}>*/}
+      {/*Uncomment when custom logo backend is ready*/}
+        {/*<Title level={3}>Edit logo</Title>*/}
+        {/*<Logo />*/}
+      {/*</section>*/}
       <section className={styles.section}>
         <Title level={3}>Edit title</Title>
         <Input
