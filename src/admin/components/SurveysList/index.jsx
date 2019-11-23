@@ -33,17 +33,6 @@ const SurveysList = () => {
 
   return (
     <div className={styles.root}>
-      <div className={styles.pillbox}>
-        <img className={styles.logo} src={logo} alt="MetaSurvey" />
-        <Button
-          onClick={() => {
-            window.localStorage.removeItem('token');
-            window.location.reload();
-          }}
-        >
-          Logout
-        </Button>
-      </div>
       <section className={styles.section}>
         <Title>Create survey</Title>
 
