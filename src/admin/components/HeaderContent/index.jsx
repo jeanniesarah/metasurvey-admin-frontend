@@ -8,7 +8,7 @@ const LinkDecorated = props => <a {...props} style={{ borderBottom: '1px dashed 
 const HeaderContent = () => {
 	return <>
 		<div style={{ float: 'left' }}>
-			<img src={logo} style={{ width: 232, height: 24, marginRight: 12 }} />
+			<img src={logo} style={{ width: 182, marginRight: 12 }} />
 			{/*<LinkDecorated href={'/'}>0.3.1</LinkDecorated>*/}
 		</div>
 		<div style={{ float: 'right' }}>
