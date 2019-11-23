@@ -42,14 +42,12 @@ const SurveysList = () => {
                 <Title>Your surveys <span style={{fontWeight: 400, fontSize: 14, opacity: 0.5}}>({surveys.length})</span></Title>
                 <div className={styles.surveys}>
                  {surveys.map(survey => (
-                   <Button
-                     type="primary"
-                     shape="round"
-                     size="large"
-                     key={survey._id}
-                   >
-                     <a href={`survey/${survey._id}`}>{survey.title}</a>
-                   </Button>
+                 <a key={survey._id}
+                    className={styles.survey_button}
+                    href={`survey/${survey._id}`}>
+                     <span className={styles.survey_button__text}>{survey.title}</span>
+                     <Button icon="edit" type="primary" size="small">Edit survey</Button>
+                 </a>
                  ))}
                </div>
              </section>

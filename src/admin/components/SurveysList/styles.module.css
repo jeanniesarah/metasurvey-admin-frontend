@@ -21,3 +21,17 @@
   align-items: center;
   margin-bottom: 50px;
 }
+
+
+.survey_button{
+    padding: 10px 10px;
+    border-radius: 4px;
+    background: white;
+    opacity: 0.8;
+    border: 1px solid rgba(106, 106, 106, 0.2);
+    color: #303030;
+    font-weight: 700;
+}
+.survey_button__text{
+    margin-right: 10px;
+}
