@@ -4,9 +4,10 @@ import { Input, Button } from 'antd';
 const Question = ({ question, style, onUpdate, onBlur, onDelete }) => {
     const { id: questionId } = question;
   return (
-    <div style={{ display: 'flex', ...style }}>
+    <div style={{ width: 400, display: 'flex', ...style }}>
       <Input placeholder={'Question text'}
              value={question.text}
+
              onChange={e => onUpdate({ questionId, text: e.target.value })}
              onBlur={e => onBlur({ questionId, text: e.target.value })}
              style={!questionId ? { marginRight: 51 } : {}}
