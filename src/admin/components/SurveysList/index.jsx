@@ -34,7 +34,7 @@ const SurveysList = () => {
   return (
     <div className={styles.root}>
       <section className={styles.section}>
-        <Title>Create survey</Title>
+        <Title>Create a survey</Title>
 
         <Search
           placeholder="Enter survey name..."
