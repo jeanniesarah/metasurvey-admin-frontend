@@ -5,7 +5,7 @@ import styles from './styles.module.css';
 const FooterContent = () => {
 	return <>
 		<div style={{float: 'left', height: 32}}>
-			<span style={{ lineHeight: '32px' }}>Created by <a href={'https://www.indiehackers.com/product/metasurvey'} target="_blank">MetaSurvey</a> Team 2019</span>
+			<span style={{ lineHeight: '32px' }}>Created by the <a href={'https://www.indiehackers.com/product/metasurvey'} target="_blank">MetaSurvey</a> Team 2019</span>
 		</div>
 		<div style={{float: 'right'}}>
 			<Button
