@@ -4,7 +4,9 @@ import { Redirect } from 'react-router-dom';
 import { addSurvey, addSurveyFromTemplate } from '../../../lib/api';
 
 import logo from './logo.png';
+import wind from './wind.svg';
 import styles from './styles.module.css';
+import Alert from "antd/es/alert";
 
 const { Title } = Typography;
 const { Search } = Input;
@@ -31,6 +33,30 @@ const SurveysList = () => {
     return <Spin size="large" />;
   }
 
+    let renderSurveys = function () {
+       if(surveys.length === 0){
+           return (null);
+       }else{
+           return (
+            <section className={styles.section}>
+                <Title>Your surveys <span style={{fontWeight: 400, fontSize: 14, opacity: 0.5}}>({surveys.length})</span></Title>
+                <div className={styles.surveys}>
+                 {surveys.map(survey => (
+                   <Button
+                     type="primary"
+                     shape="round"
+                     size="large"
+                     key={survey._id}
+                   >
+                     <a href={`survey/${survey._id}`}>{survey.title}</a>
+                   </Button>
+                 ))}
+               </div>
+             </section>
+           )
+           }
+    };
+
   return (
     <div className={styles.root}>
       <section className={styles.section}>
@@ -50,22 +76,7 @@ const SurveysList = () => {
           }}
         />
       </section>
-      <section className={styles.section}>
-        <Title>Your surveys</Title>
-
-        <div className={styles.surveys}>
-          {surveys.map(survey => (
-            <Button
-              type="primary"
-              shape="round"
-              size="large"
-              key={survey._id}
-            >
-              <a href={`survey/${survey._id}`}>{survey.title}</a>
-            </Button>
-          ))}
-        </div>
-      </section>
+       {renderSurveys()}
     </div>
   );
 };
