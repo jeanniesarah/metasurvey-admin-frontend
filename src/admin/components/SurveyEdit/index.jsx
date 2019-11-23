@@ -129,7 +129,7 @@ const SurveyEdit = () => {
         {/*<Logo />*/}
       {/*</section>*/}
       <section className={styles.section}>
-        <Title level={3}>Edit title</Title>
+        <Title level={3}>Edit survey title</Title>
       <Search
         size="large"
         placeholder="Enter survey title"
