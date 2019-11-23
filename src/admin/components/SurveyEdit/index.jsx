@@ -155,7 +155,7 @@ const SurveyEdit = () => {
           questions={survey.questions}
           onItemAdd={setNewQuestion}
           onItemUpdate={setQuestion}
-          onItemBlur={saveQuestion}
+          saveQuestion={saveQuestion}
           onItemDelete={deleteQuestion}
         />
       </section>

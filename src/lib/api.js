@@ -94,6 +94,7 @@ export const addSurveyQuestion = ({ surveyId, text }) => {
     .then(bodyJson => {
       const addedQuestionId = bodyJson._id;
       // console.log('Question added to server', surveyId, text, addedQuestionId);
+	    message.success('Successfully created a new question.');
       return { ...bodyJson, id: addedQuestionId };
     });
 };
@@ -112,6 +113,7 @@ export const updateSurveyQuestion = ({
     }
   ).then(body => {
     // console.log('Question saved to server', surveyId, questionId, text);
+    message.success('Successfully saved.');
     return body.json();
   });
 };

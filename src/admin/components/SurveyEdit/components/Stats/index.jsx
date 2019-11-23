@@ -18,7 +18,20 @@ export default ({ surveyId }) => {
     if (isEmpty(stats) || !Array.isArray(stats)) {
         return null;
     }
-
+	
+    let allQuestionsHasZeroAnswers = true;
+    if(stats !== undefined){
+        let statsCount = stats.length;
+        for(let i = 0; i < statsCount; i++){
+            if(stats[i]['yesCount'] !== 0){
+                allQuestionsHasZeroAnswers = false;
+                break;
+            }
+        }
+    }
+    if(allQuestionsHasZeroAnswers){
+        return (null);
+    }
 
   return (
     <>

@@ -1,17 +1,20 @@
 import React from 'react';
-import { Input, Button, message } from 'antd';
+import {Input, Button, message } from 'antd';
 
-const Question = ({ question, style, onUpdate, onBlur, onDelete }) => {
+const Question = ({ question, style, onUpdate, saveQuestion, onDelete }) => {
     const { id: questionId } = question;
+    const { Search } = Input;
+
   return (
     <div style={{ width: 400, display: 'flex', ...style }}>
-      <Input placeholder={'Question text'}
-             value={question.text}
-
-             onChange={e => onUpdate({ questionId, text: e.target.value })}
-             onBlur={e => onBlur({ questionId, text: e.target.value })}
-             style={!questionId ? { marginRight: 51 } : {}}
-      />
+<Search
+      placeholder="Question text"
+      enterButton="Save"
+      value={question.text}
+      onChange={e => onUpdate({ questionId, text: e.target.value })}
+      onSearch={value => saveQuestion({ questionId, text: value })}
+      style={!questionId ? { marginRight: 51 } : {}}
+    />
         {questionId &&
         <Button style={{marginLeft: 10}}
                 type="danger"
