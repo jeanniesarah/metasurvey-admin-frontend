@@ -40,6 +40,7 @@ const SurveysList = () => {
           placeholder="Enter survey name..."
           enterButton="Create"
           size="large"
+          style={{width: 400}}
           onSearch={title => {
             addSurvey({ title })
               .then(({ _id }) => {
