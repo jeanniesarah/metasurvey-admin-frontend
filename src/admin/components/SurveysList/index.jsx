@@ -1,4 +1,5 @@
 import React from 'react';
+import { isEmpty } from 'lodash';
 import { Typography, Input, Button, Spin } from 'antd';
 import { getSurveysList, addSurvey, addSurveyFromTemplate } from '../../../lib/api';
 
@@ -22,7 +23,7 @@ const SurveysList = () => {
   }
 
     let renderSurveys = function () {
-       if(surveys.length === 0){
+       if(isEmpty(surveys)){
            return (null);
        }else{
            return (
