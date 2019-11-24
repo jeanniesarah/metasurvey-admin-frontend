@@ -65,7 +65,7 @@ export default ({ surveyId }) => {
         >
           <TableHead>
             <TableRow>
-              {questions.map((question, index) => <TableCell>
+              {questions.map((question, index) => <TableCell key={index}>
                 <Tooltip key={question._id} title={question.text} placement="top">
                   <span className={styles.badge}>{index + 1}</span>
                 </Tooltip>
@@ -76,7 +76,7 @@ export default ({ surveyId }) => {
           <TableBody>
             {results.map((row) => (
               <TableRow key={row._id}>
-                {row.answers.map(answer => <TableCell>{ answer ? '✓' : ''}</TableCell>)}
+                {row.answers.map((answer, index) => <TableCell key={index}>{ answer ? '✓' : ''}</TableCell>)}
                 <TableCell component="th" scope="row">
                   {row.comment}
                 </TableCell>

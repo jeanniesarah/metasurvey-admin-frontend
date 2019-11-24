@@ -24,6 +24,7 @@
 
 
 .survey_button{
+    display: inline-block;
     padding: 10px 10px;
     border-radius: 4px;
     background: white;
