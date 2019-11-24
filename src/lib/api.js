@@ -37,7 +37,15 @@ export const validateToken = () => {
 export const getSurveysList = () => {
   return fetch(`${apiUrl}/admin/survey`, {
     headers: getHeaders(),
-  }).then(body => body.json());
+  })
+    .then(body => body.json())
+    .then(body => {
+      if (!Array.isArray(body)) {
+        console.warn('Non-array returned', body);
+        return [];
+      }
+      return body;
+    });
 };
 
 export const getSurvey = id => {
