@@ -1,5 +1,6 @@
 import { VALIDATE } from 'lib/auth';
 import { message } from 'antd';
+import { get } from 'lodash';
 
 const apiUrl = 'https://meta-survey-app.herokuapp.com/api';
 const getToken = () => window.localStorage.getItem('token');
@@ -20,15 +21,23 @@ export const getListOfSurveys = () => {
 
 export const validateToken = () => {
   let isValid = true;
+  if (!getToken()) {
+    return false;
+  }
 
   fetch(VALIDATE, {
     headers: getAuthHeaders(),
   }).then(body => {
-    // isValid =
-    body.json();
+    isValid = get(body.json(), 'type') !== 'INVALID_TOKEN';
   });
 
   return isValid;
+};
+
+export const getSurveysList = () => {
+  return fetch(`${apiUrl}/admin/survey`, {
+    headers: getHeaders(),
+  }).then(body => body.json());
 };
 
 export const getSurvey = id => {

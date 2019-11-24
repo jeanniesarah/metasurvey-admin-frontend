@@ -13,7 +13,7 @@ const Question = ({ question, style, onUpdate, saveQuestion, onDelete }) => {
       value={question.text}
       onChange={e => onUpdate({ questionId, text: e.target.value })}
       onSearch={value => saveQuestion({ questionId, text: value })}
-      style={!questionId ? { marginRight: 51 } : {}}
+      style={!questionId ? { marginRight: 56 } : {}}
     />
         {questionId &&
         <Button style={{marginLeft: 10}}

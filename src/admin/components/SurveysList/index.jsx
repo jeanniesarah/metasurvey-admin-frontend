@@ -1,7 +1,6 @@
 import React from 'react';
 import { Typography, Input, Button, Spin } from 'antd';
-import { Redirect } from 'react-router-dom';
-import { addSurvey, addSurveyFromTemplate } from '../../../lib/api';
+import { getSurveysList, addSurvey, addSurveyFromTemplate } from '../../../lib/api';
 
 import logo from './logo.png';
 import wind from './wind.svg';
@@ -13,20 +12,9 @@ const { Search } = Input;
 
 const SurveysList = () => {
   const [surveys, setSurveys] = React.useState(undefined);
-  const token = window.localStorage.getItem('token');
-
-  if (!token) {
-    return <Redirect to="/login" />;
-  }
 
   if (!surveys) {
-    fetch(`https://meta-survey-app.herokuapp.com/api/admin/survey`, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + token,
-      },
-    })
-      .then(body => body.json())
+    getSurveysList()
       .then(setSurveys)
       .catch(() => alert('Failed to load surveys'));
 
