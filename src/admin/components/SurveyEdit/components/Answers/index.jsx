@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { isEmpty } from 'lodash';
-import { Spin, Typography } from 'antd';
-import Tooltip from '@material-ui/core/Tooltip';
+import {Spin, Tooltip, Typography} from 'antd';
+// import Tooltip from '@material-ui/core/Tooltip';
+
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -66,17 +67,17 @@ export default ({ surveyId }) => {
           <TableHead>
             <TableRow>
               {questions.map((question, index) => <TableCell key={index}>
-                <Tooltip key={question._id} title={question.text} placement="top">
+                <Tooltip key={question._id} title={question.text} placement="topLeft">
                   <span className={styles.badge}>{index + 1}</span>
                 </Tooltip>
               </TableCell>)}
-              <TableCell>Comment</TableCell>
+              <TableCell>Users' comment</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {results.map((row) => (
               <TableRow key={row._id}>
-                {row.answers.map((answer, index) => <TableCell key={index}>{ answer ? '✓' : ''}</TableCell>)}
+                {row.answers.map((answer, index) => <TableCell key={index}>{ answer ? '✅' : '❌'}</TableCell>)}
                 <TableCell component="th" scope="row">
                   {row.comment}
                 </TableCell>
