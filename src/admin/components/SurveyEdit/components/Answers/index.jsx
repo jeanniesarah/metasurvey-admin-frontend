@@ -57,7 +57,7 @@ export default ({ surveyId }) => {
 
   return (
     <>
-      <Title>Answers</Title>
+      <Title>Answers table</Title>
       <Paper className={classes.root}>
         <Table
           className={classes.table}
