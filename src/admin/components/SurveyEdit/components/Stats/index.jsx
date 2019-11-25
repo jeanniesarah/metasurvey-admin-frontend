@@ -39,7 +39,7 @@ export default ({ surveyId }) => {
       <Title>Answers stats</Title>
       <Bar
         data={{
-          labels: stats.map(s => s.text.substring(0, 30)),// ['Red', 'Green', 'Yellow'],
+          labels: stats.map((s, index) => (index + 1) + '. ' + s.text.substring(0, 30)),// ['Red', 'Green', 'Yellow'],
           datasets: [
             {
               data: stats.map(s => s.yesCount), //[300, 50, 100],
