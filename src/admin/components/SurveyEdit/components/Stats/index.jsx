@@ -36,7 +36,7 @@ export default ({ surveyId }) => {
   return (
     <>
       <div style={{width: stats.length * 100}}>
-      <Title>Stats</Title>
+      <Title>Answers stats</Title>
       <Bar
         data={{
           labels: stats.map(s => s.text.substring(0, 30)),// ['Red', 'Green', 'Yellow'],
