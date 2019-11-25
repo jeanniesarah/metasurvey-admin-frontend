@@ -31,17 +31,13 @@ import { LOGIN } from 'lib/auth';
 class LoginForm extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      token: null,
-    };
   }
 
   componentWillMount() {}
 
   clearFieldsMessages() {}
 
-  handleSubmit = e => {
+  handleSubmit = setIsTokenValid => e => {
     e.preventDefault();
 
     this.props.form.validateFieldsAndScroll((err, values) => {
@@ -51,10 +47,9 @@ class LoginForm extends Component {
           .then(response => {
             // handle success
             // Django returns the access token.
-
             let accessToken = response.data.jwtToken;
             setToken(accessToken);
-            this.setState({ token: accessToken });
+            setIsTokenValid(true);
           })
           .catch(error => {
             // handle error
@@ -74,17 +69,14 @@ class LoginForm extends Component {
   };
 
   render() {
+    const { setIsTokenValid } = this.props;
     const { getFieldDecorator } = this.props.form;
-
-    if (this.state.token) {
-      return <Redirect to="/" />;
-    }
 
     return (
       <AuthForm>
         <div className="login-form">
           <Form
-            onSubmit={this.handleSubmit}
+            onSubmit={this.handleSubmit(setIsTokenValid)}
             className="login-form__form"
           >
             <AuthFormHeader title="Sign in"></AuthFormHeader>

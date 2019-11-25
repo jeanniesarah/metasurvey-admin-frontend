@@ -33,15 +33,11 @@ import { setToken } from 'lib/api';
 class JoinForm extends Component {
   constructor() {
     super();
-
-    this.state = {
-      token: null,
-    };
   }
 
   componentWillMount() {}
 
-  handleSubmit = e => {
+  handleSubmit = setIsTokenValid => e => {
     e.preventDefault();
 
     this.props.form.validateFieldsAndScroll((err, values) => {
@@ -57,7 +53,7 @@ class JoinForm extends Component {
 
             // Django returns the access token.
             setToken(accessToken);
-            this.setState({ token: accessToken });
+            setIsTokenValid(true);
 
             openNotification(
               'Welcome! 🦄',
@@ -92,17 +88,14 @@ class JoinForm extends Component {
   };
 
   render() {
+    const { setIsTokenValid } = this.props;
     const { getFieldDecorator } = this.props.form;
-
-    if (this.state.token) {
-      return <Redirect to="/" />;
-    }
 
     return (
       <AuthForm>
         <div className="login-form">
           <Form
-            onSubmit={this.handleSubmit}
+            onSubmit={this.handleSubmit(setIsTokenValid)}
             className="login-form__form"
           >
             <AuthFormHeader

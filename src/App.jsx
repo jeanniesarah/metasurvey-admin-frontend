@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -13,7 +13,17 @@ import { Redirect } from 'react-router-dom';
 import 'antd/dist/antd.css';
 import { validateToken } from 'lib/api';
 
-function App() {
+const App = () => {
+  const [isTokenValid, setIsTokenValid] = useState(undefined);
+
+  if (isTokenValid === undefined) {
+    validateToken()
+        .then(setIsTokenValid);
+
+    // TODO loading screen with logo
+    return null;
+  }
+
   return (
     <Router>
       <Switch>
@@ -23,31 +33,31 @@ function App() {
         <Route
           path="/admin"
           render={() =>
-              validateToken() ? <Admin /> : <Redirect to="/login" />
+              isTokenValid ? <Admin /> : <Redirect to="/login" />
           }
         />
         <Route
           path="/confirm-email"
           render={() =>
-              validateToken() ? <ConfirmEmail /> : <Redirect to="/login" />
+              isTokenValid ? <ConfirmEmail /> : <Redirect to="/login" />
           }
         />
         <Route
           path="/signup"
           render={() =>
-            !validateToken() ? <JoinForm /> : <Redirect to="/" />
+            !isTokenValid ? <JoinForm setIsTokenValid={setIsTokenValid} /> : <Redirect to="/" />
           }
         />
         <Route
           exact
           path={`/login`}
           render={() =>
-            !validateToken() ? <LoginForm /> : <Redirect to="/" />
+            !isTokenValid ? <LoginForm setIsTokenValid={setIsTokenValid} /> : <Redirect to="/" />
           }
         />
       </Switch>
     </Router>
   );
-}
+};
 
 export default App;
