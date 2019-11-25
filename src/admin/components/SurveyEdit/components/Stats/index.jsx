@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { isEmpty } from 'lodash';
-import { Pie } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 import { Spin, Typography } from 'antd';
 import { getSurveyStatsPiechart } from '../../../../../lib/api';
 const { Title } = Typography;
@@ -35,10 +35,11 @@ export default ({ surveyId }) => {
 
   return (
     <>
+      <div style={{width: stats.length * 100}}>
       <Title>Stats</Title>
-      <Pie
+      <Bar
         data={{
-          labels: stats.map(s => s.text),// ['Red', 'Green', 'Yellow'],
+          labels: stats.map(s => s.text.substring(0, 30)),// ['Red', 'Green', 'Yellow'],
           datasets: [
             {
               data: stats.map(s => s.yesCount), //[300, 50, 100],
@@ -66,9 +67,11 @@ export default ({ surveyId }) => {
           ],
         }}
         legend={{
-          position: 'right',
+          // position: 'right',
+          display: false,
         }}
       />
+      </div>
     </>
   );
 };
