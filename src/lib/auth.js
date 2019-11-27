@@ -1,5 +1,5 @@
 // auth
-const BASE = 'https://meta-survey-app.herokuapp.com/';
+const BASE = 'https://api.getmetasurvey.com/';
 const API_PATH = `${BASE}api/auth/`;
 
 const REGISTER = `${API_PATH}register`;
