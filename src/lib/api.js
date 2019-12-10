@@ -2,7 +2,7 @@ import { VALIDATE } from 'lib/auth';
 import { message } from 'antd';
 import { get, isEmpty } from 'lodash';
 
-const apiUrl = 'https://meta-survey-app.herokuapp.com/api';
+const apiUrl = 'https://api.getmetasurvey.com/api';
 const getToken = () => window.localStorage.getItem('token');
 const getAuthHeaders = () => ({
   Authorization: `Bearer ${getToken()}`,
