@@ -41,9 +41,9 @@ const SurveyEdit = () => {
     /* eslint-enable no-restricted-globals */
   };
 
-  const saveQuestion = ({ questionId, text }) => {
+  const saveQuestion = ({ questionId, text, imageSrc }) => {
     if (!questionId) {
-      addSurveyQuestion({ surveyId, text }).then(({ id, text }) => {
+      addSurveyQuestion({ surveyId, text, imageSrc }).then(({ id, text, imageSrc }) => {
         const clonedQuestions = survey.questions.map(q => ({ ...q }));
         clonedQuestions.find(q => q.id === undefined).id = id;
 
@@ -53,7 +53,7 @@ const SurveyEdit = () => {
         });
       });
     } else {
-      updateSurveyQuestion({ surveyId, questionId, text });
+      updateSurveyQuestion({ surveyId, questionId, text, imageSrc });
     }
   };
 

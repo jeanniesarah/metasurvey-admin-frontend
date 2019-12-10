@@ -41,6 +41,33 @@ export const getSurveysList = () => {
       return body;
     });
 };
+export const getUserData = () => {
+  return fetch(`${apiUrl}/admin/user`, {
+    headers: getHeaders(),
+  })
+    .then(body => body.json())
+};
+export const cancelUserSubscription = ({ email }) => {
+  return fetch(`${apiUrl}/admin/cancel`, {
+    method: 'POST',
+    headers: getHeaders(),
+    body: JSON.stringify({ email }),
+  }).then(body => {
+	  message.success('Successfully cancelled the subscription.');
+  	return body.json()
+  });
+};
+export const upgradeUserToPro = ({ email }) => {
+  return fetch(`${apiUrl}/admin/upgrade`, {
+    method: 'POST',
+    headers: getHeaders(),
+    body: JSON.stringify({ email }),
+  }).then(body => {
+	  message.success('Successfully upgraded to Pro.');
+  	return body.json()
+  });
+};
+
 
 export const getSurvey = id => {
   return fetch(`${apiUrl}/admin/survey/${id}`, {
@@ -95,11 +122,11 @@ export const deleteSurvey = ({ surveyId }) => {
   });
 };
 
-export const addSurveyQuestion = ({ surveyId, text }) => {
+export const addSurveyQuestion = ({ surveyId, text, imageSrc }) => {
   return fetch(`${apiUrl}/admin/survey/${surveyId}/question`, {
     method: 'POST',
     headers: getHeaders(),
-    body: JSON.stringify({ text }),
+    body: JSON.stringify({ text, imageSrc }),
   })
     .then(body => body.json())
     .then(bodyJson => {
@@ -114,13 +141,14 @@ export const updateSurveyQuestion = ({
   surveyId,
   questionId,
   text,
+  imageSrc
 }) => {
   return fetch(
     `${apiUrl}/admin/survey/${surveyId}/question/${questionId}`,
     {
       method: 'PATCH',
       headers: getHeaders(),
-      body: JSON.stringify({ text }),
+      body: JSON.stringify({ text, imageSrc }),
     }
   ).then(body => {
     // console.log('Question saved to server', surveyId, questionId, text);

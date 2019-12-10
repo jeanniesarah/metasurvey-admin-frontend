@@ -1,7 +1,7 @@
 import React from 'react';
 import { isEmpty } from 'lodash';
-import { Typography, Input, Button, Spin } from 'antd';
-import { getSurveysList, addSurvey, addSurveyFromTemplate } from '../../../lib/api';
+import {Typography, Input, Button, Spin, message} from 'antd';
+import { getSurveysList, addSurvey, addSurveyFromTemplate, getUserData } from '../../../lib/api';
 
 import logo from './logo.png';
 import wind from './wind.svg';
@@ -13,6 +13,7 @@ const { Search } = Input;
 
 const SurveysList = () => {
   const [surveys, setSurveys] = React.useState(undefined);
+  const [user, setUserData] = React.useState(undefined);
 
   if (!surveys) {
     getSurveysList()
@@ -20,6 +21,12 @@ const SurveysList = () => {
       .catch(() => alert('Failed to load surveys'));
 
     return <Spin size="large" />;
+  }
+
+  if(!user){
+    getUserData()
+      .then(setUserData)
+      .catch(() => console.log('Error to load user data.'));
   }
 
     let renderSurveys = function () {
@@ -55,11 +62,18 @@ const SurveysList = () => {
           size="large"
           style={{width: 400}}
           onSearch={title => {
-            addSurvey({ title })
-              .then(({ _id }) => {
-                document.location.href = `survey/${_id}`;
-              })
-              .catch(() => alert('Failed to create survey'));
+          	if(user){
+          		if(surveys.length === 0 || user.isPro){
+          			addSurvey({ title })
+		              .then(({ _id }) => {
+		                document.location.href = `survey/${_id}`;
+		              })
+		              .catch(() => alert('Failed to create survey'));
+	            }else{
+          			message.error('Free plan only allows 1 survey. Please upgrade to create more surveys.');
+	            }
+            }else{
+            }
           }}
         />
       </section>
