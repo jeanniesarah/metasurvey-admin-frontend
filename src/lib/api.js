@@ -42,7 +42,7 @@ export const getSurveysList = () => {
     });
 };
 export const getUserData = () => {
-  return fetch(`${apiUrl}/admin/user`, {
+  return fetch(`${apiUrl}/admin/me`, {
     headers: getHeaders(),
   })
     .then(body => body.json())
