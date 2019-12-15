@@ -52,7 +52,7 @@ const HeaderContent = () => {
 					setUpgradeModalVisible(true)
 				}
 				}
-				type="primary">Upgrade</Button>}
+				type="primary">Upgrade to Pro</Button>}
 
 			{user && user.isPro &&
 			<Popconfirm
