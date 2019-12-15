@@ -45,7 +45,10 @@ const SurveyEdit = () => {
     if (!questionId) {
       addSurveyQuestion({ surveyId, text, imageSrc }).then(({ id, text, imageSrc }) => {
         const clonedQuestions = survey.questions.map(q => ({ ...q }));
-        clonedQuestions.find(q => q.id === undefined).id = id;
+        const emptyQuestion = clonedQuestions.find(q => q.id === undefined);
+        emptyQuestion.id = id;
+        emptyQuestion.text = text;
+        emptyQuestion.imageSrc = imageSrc;
 
         setSurvey({
           ...survey,
