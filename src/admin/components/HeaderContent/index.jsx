@@ -20,7 +20,10 @@ const HeaderContent = () => {
 
 	function confirmCancelPlan(e) {
 		if(user && user.email){
-			cancelUserSubscription(user)
+			cancelUserSubscription(user);
+			setTimeout(() => {
+				window.location.reload(false);
+			}, 3000);
 		}
 	}
 
@@ -63,10 +66,7 @@ const HeaderContent = () => {
 			>
 				<Button
 					onClick={() => {
-						cancelUserSubscription();
-						setTimeout(() => {
-							window.location.reload(false);
-						}, 3000);
+
 					}
 					}
 					type="default">Cancel plan</Button>
