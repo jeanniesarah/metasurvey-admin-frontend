@@ -63,7 +63,10 @@ const HeaderContent = () => {
 			>
 				<Button
 					onClick={() => {
-
+						cancelUserSubscription();
+						setTimeout(() => {
+							window.location.reload(false);
+						}, 3000);
 					}
 					}
 					type="default">Cancel plan</Button>
@@ -128,7 +131,7 @@ const HeaderContent = () => {
 							<div className={styles.plan__price_wrapper}>
 								<div className={styles.plan__price_box}>
 									<div className={styles.plan__currency}>$</div>
-						            <span>
+									<span>
 			                            <span className={styles.plan__price_striked}>8</span>
 			                            <span className={styles.plan__price_actual}>4</span>
 			                        </span>
