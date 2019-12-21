@@ -42,7 +42,8 @@ export default ({ surveyId }) => {
           labels: stats.map((s, index) => (index + 1) + '. ' + s.text.substring(0, 30)),// ['Red', 'Green', 'Yellow'],
           datasets: [
             {
-              data: stats.map(s => s.yesCount), //[300, 50, 100],
+                // last 0 is to make graph have Y axis start with 0. Hack
+              data: [...stats.map(s => s.yesCount), 0], //[300, 50, 100],
                 backgroundColor: [
                     'rgba(255, 99, 132)',
                     'rgba(54, 162, 235)',
