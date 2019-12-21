@@ -37,7 +37,7 @@ const HeaderContent = () => {
 					window.location.reload(false);
 				}, 3000);
 			},
-			coupon: 'PHPRO50',
+			// coupon: 'PHPRO50',
 			email: user.email
 		});
 	}
@@ -131,10 +131,9 @@ const HeaderContent = () => {
 							<div className={styles.plan__price_wrapper}>
 								<div className={styles.plan__price_box}>
 									<div className={styles.plan__currency}>$</div>
-									<span>
-			                            <span className={styles.plan__price_striked}>8</span>
-			                            <span className={styles.plan__price_actual}>4</span>
-			                        </span>
+									<div className={styles.plan__price}>
+										8
+									</div>
 									<div className={styles.plan__period}>/month</div>
 								</div>
 							</div>
