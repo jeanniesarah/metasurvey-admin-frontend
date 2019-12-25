@@ -11,6 +11,12 @@ const getHeaders = () => ({
   ...getAuthHeaders(),
   'Content-Type': 'application/json',
 });
+const handleApiErrors = (jsonBody) => {
+  if (jsonBody && jsonBody.type === 'Error') {
+    throw new Error(JSON.stringify(jsonBody));
+  }
+  return jsonBody;
+};
 
 export const setToken = value =>
   window.localStorage.setItem('token', value);
@@ -39,13 +45,14 @@ export const getSurveysList = () => {
         return [];
       }
       return body;
-    });
+    })
+  	.then(handleApiErrors);
 };
 export const getUserData = () => {
   return fetch(`${apiUrl}/admin/me`, {
     headers: getHeaders(),
   })
-    .then(body => body.json())
+    .then(body => body.json()).then(handleApiErrors);
 };
 export const cancelUserSubscription = ({ email }) => {
   return fetch(`${apiUrl}/admin/cancel`, {
@@ -72,19 +79,19 @@ export const upgradeUserToPro = ({ email }) => {
 export const getSurvey = id => {
   return fetch(`${apiUrl}/admin/survey/${id}`, {
     headers: getHeaders(),
-  }).then(body => body.json());
+  }).then(body => body.json()).then(handleApiErrors);
 };
 
 export const getSurveyStatsPiechart = id => {
   return fetch(`${apiUrl}/admin/stat/${id}/piechart`, {
     headers: getHeaders(),
-  }).then(body => body.json());
+  }).then(body => body.json()).then(handleApiErrors);
 };
 
 export const getSurveyStatsAnswers = id => {
   return fetch(`${apiUrl}/admin/stat/${id}/table`, {
     headers: getHeaders(),
-  }).then(body => body.json());
+  }).then(body => body.json()).then(handleApiErrors);
 };
 
 export const addSurvey = ({ title }) => {
