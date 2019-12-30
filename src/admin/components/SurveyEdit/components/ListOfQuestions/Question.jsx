@@ -29,17 +29,6 @@ const Question = ({ question, style, onUpdate, saveQuestion, onDelete, index, fo
 
 				<div>
 					<Form layout="vertical" onSubmit={handleSubmit}>
-						<Form.Item style={{marginBottom: 0}}>
-							{getFieldDecorator('imageSrc', {
-								initialValue: question.imageSrc
-							})(
-								<Input
-									prefix={<Icon type="link" style={{ color: 'rgba(0,0,0,.25)' }} />}
-									placeholder="Image URL (optionally)"
-									name="imageSrc"
-								/>
-							)}
-						</Form.Item>
 						<Form.Item style={{marginBottom: 20}}>
 							{getFieldDecorator('text', {
 								initialValue: question.text
@@ -48,6 +37,17 @@ const Question = ({ question, style, onUpdate, saveQuestion, onDelete, index, fo
 									prefix={<Icon type="edit" style={{ color: 'rgba(0,0,0,.25)' }} />}
 									placeholder="Question text"
 									name="text"
+								/>
+							)}
+						</Form.Item>
+						<Form.Item style={{marginBottom: 0}}>
+							{getFieldDecorator('imageSrc', {
+								initialValue: question.imageSrc
+							})(
+								<Input
+									prefix={<Icon type="link" style={{ color: 'rgba(0,0,0,.25)' }} />}
+									placeholder="Image URL (optional)"
+									name="imageSrc"
 								/>
 							)}
 						</Form.Item>
