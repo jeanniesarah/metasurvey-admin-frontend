@@ -11,7 +11,7 @@ const getHeaders = () => ({
   ...getAuthHeaders(),
   'Content-Type': 'application/json',
 });
-const handleApiErrors = (jsonBody) => {
+const handleApiErrors = jsonBody => {
   if (jsonBody && jsonBody.type === 'Error') {
     throw new Error(JSON.stringify(jsonBody));
   }
@@ -25,14 +25,17 @@ export const getListOfSurveys = () => {
   return {};
 };
 
-export const validateToken = () => fetch(VALIDATE, {
+export const validateToken = () =>
+  fetch(VALIDATE, {
     headers: getAuthHeaders(),
   })
     .then(body => body.json())
     .then(body => {
-      const isValid = !isEmpty(get(body, '_id')) && get(body, 'type') !== 'INVALID_TOKEN';
+      const isValid =
+        !isEmpty(get(body, '_id')) &&
+        get(body, 'type') !== 'INVALID_TOKEN';
       return isValid;
-  });
+    });
 
 export const getSurveysList = () => {
   return fetch(`${apiUrl}/admin/survey`, {
@@ -46,13 +49,14 @@ export const getSurveysList = () => {
       }
       return body;
     })
-  	.then(handleApiErrors);
+    .then(handleApiErrors);
 };
 export const getUserData = () => {
   return fetch(`${apiUrl}/admin/me`, {
     headers: getHeaders(),
   })
-    .then(body => body.json()).then(handleApiErrors);
+    .then(body => body.json())
+    .then(handleApiErrors);
 };
 export const cancelUserSubscription = ({ email }) => {
   return fetch(`${apiUrl}/admin/cancel`, {
@@ -60,8 +64,8 @@ export const cancelUserSubscription = ({ email }) => {
     headers: getHeaders(),
     body: JSON.stringify({ email }),
   }).then(body => {
-	  message.success('Successfully cancelled the subscription.');
-  	return body.json()
+    message.success('Successfully cancelled the subscription.');
+    return body.json();
   });
 };
 export const upgradeUserToPro = ({ email }) => {
@@ -70,28 +74,33 @@ export const upgradeUserToPro = ({ email }) => {
     headers: getHeaders(),
     body: JSON.stringify({ email }),
   }).then(body => {
-	  message.success('Successfully upgraded to Pro.');
-  	return body.json()
+    message.success('Successfully upgraded to Pro.');
+    return body.json();
   });
 };
-
 
 export const getSurvey = id => {
   return fetch(`${apiUrl}/admin/survey/${id}`, {
     headers: getHeaders(),
-  }).then(body => body.json()).then(handleApiErrors);
+  })
+    .then(body => body.json())
+    .then(handleApiErrors);
 };
 
 export const getSurveyStatsPiechart = id => {
   return fetch(`${apiUrl}/admin/stat/${id}/piechart`, {
     headers: getHeaders(),
-  }).then(body => body.json()).then(handleApiErrors);
+  })
+    .then(body => body.json())
+    .then(handleApiErrors);
 };
 
 export const getSurveyStatsAnswers = id => {
   return fetch(`${apiUrl}/admin/stat/${id}/table`, {
     headers: getHeaders(),
-  }).then(body => body.json()).then(handleApiErrors);
+  })
+    .then(body => body.json())
+    .then(handleApiErrors);
 };
 
 export const addSurvey = ({ title }) => {
@@ -109,13 +118,16 @@ export const addSurveyFromTemplate = ({ title, templateId }) => {
   }).then(body => body.json());
 };
 
-export const saveSurvey = ({ surveyId, title }) => {
+export const saveSurvey = ({ surveyId, payload }) => {
   return fetch(`${apiUrl}/admin/survey/${surveyId}`, {
     method: 'PATCH',
     headers: getHeaders(),
-    body: JSON.stringify({ title }),
+    body: JSON.stringify({ ...(payload || {}) }),
   }).then(body => {
-      message.success('Successfully changed title to "' + title + '".');
+    message.success('Successfully saved.');
+    /* if (get(payload, 'title')) {
+      message.success('Successfully changed title to "' + get(payload, 'title') + '".');
+    } */
     // console.log('Survey saved to server', surveyId, title);
   });
 };
@@ -139,7 +151,7 @@ export const addSurveyQuestion = ({ surveyId, text, imageSrc }) => {
     .then(bodyJson => {
       const addedQuestionId = bodyJson._id;
       // console.log('Question added to server', surveyId, text, addedQuestionId);
-	    message.success('Successfully created a new question.');
+      message.success('Successfully created a new question.');
       return { ...bodyJson, id: addedQuestionId };
     });
 };
@@ -148,7 +160,7 @@ export const updateSurveyQuestion = ({
   surveyId,
   questionId,
   text,
-  imageSrc
+  imageSrc,
 }) => {
   return fetch(
     `${apiUrl}/admin/survey/${surveyId}/question/${questionId}`,

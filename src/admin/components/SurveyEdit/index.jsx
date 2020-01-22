@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { remove } from 'lodash';
 import { useParams } from 'react-router-dom';
-import {Input, Spin, Typography, Button, Search} from 'antd';
+import { Input, Spin, Typography, Button, Search } from 'antd';
 import ListOfQuestions from './components/ListOfQuestions';
 import Logo from './components/Logo';
 import {
@@ -27,9 +27,14 @@ const SurveyEdit = () => {
   let { id: surveyId } = useParams();
 
   const [title, setTitle] = useState('');
+  const [footerHTML, setFooterHTML] = useState('');
   const [survey, setSurvey] = useState(undefined);
 
   const userSurveyUrl = `${userSurveyDomain}/?survey_id=${surveyId}`;
+
+  const saveSurveyData = () => {
+    saveSurvey({ surveyId, payload: { title, footerHTML } });
+  };
 
   const deleteSurveyWithConfirm = () => {
     /* eslint-disable no-restricted-globals */
@@ -43,18 +48,24 @@ const SurveyEdit = () => {
 
   const saveQuestion = ({ questionId, text, imageSrc }) => {
     if (!questionId) {
-      addSurveyQuestion({ surveyId, text, imageSrc }).then(({ id, text, imageSrc }) => {
-        const clonedQuestions = survey.questions.map(q => ({ ...q }));
-        const emptyQuestion = clonedQuestions.find(q => q.id === undefined);
-        emptyQuestion.id = id;
-        emptyQuestion.text = text;
-        emptyQuestion.imageSrc = imageSrc;
+      addSurveyQuestion({ surveyId, text, imageSrc }).then(
+        ({ id, text, imageSrc }) => {
+          const clonedQuestions = survey.questions.map(q => ({
+            ...q,
+          }));
+          const emptyQuestion = clonedQuestions.find(
+            q => q.id === undefined
+          );
+          emptyQuestion.id = id;
+          emptyQuestion.text = text;
+          emptyQuestion.imageSrc = imageSrc;
 
-        setSurvey({
-          ...survey,
-          questions: clonedQuestions,
-        });
-      });
+          setSurvey({
+            ...survey,
+            questions: clonedQuestions,
+          });
+        }
+      );
     } else {
       updateSurveyQuestion({ surveyId, questionId, text, imageSrc });
     }
@@ -100,6 +111,7 @@ const SurveyEdit = () => {
     getSurvey(surveyId).then(survey => {
       setSurvey(survey);
       setTitle(survey.title);
+      setFooterHTML(survey.footerHTML);
     });
 
     return <Spin size="large" />;
@@ -111,9 +123,15 @@ const SurveyEdit = () => {
         <Title>{title}</Title>
         <p>
           Send this link to users:
-          <br/>
-          <a href={userSurveyUrl} target={'_blank'}>{userSurveyUrl}</a>
-          <Button icon="copy" style={{ marginLeft: 10 }} onClick={() => copyTextToClipboard(userSurveyUrl)} />
+          <br />
+          <a href={userSurveyUrl} target={'_blank'}>
+            {userSurveyUrl}
+          </a>
+          <Button
+            icon="copy"
+            style={{ marginLeft: 10 }}
+            onClick={() => copyTextToClipboard(userSurveyUrl)}
+          />
         </p>
         <Button
           icon="left"
@@ -128,22 +146,21 @@ const SurveyEdit = () => {
       </section>
       {/*<section className={styles.section}>*/}
       {/*Uncomment when custom logo backend is ready*/}
-        {/*<Title level={3}>Edit logo</Title>*/}
-        {/*<Logo />*/}
+      {/*<Title level={3}>Edit logo</Title>*/}
+      {/*<Logo />*/}
       {/*</section>*/}
       <section className={styles.section}>
         <Title level={3}>Edit survey title</Title>
-      <Search
-        size="large"
-        placeholder="Enter survey title"
-        value={title}
-        onSearch={() => {
-            saveSurvey({ surveyId, title });
-        }}
-        onChange={e => setTitle(e.target.value)}
-        style={{ width: 400 }}
-        enterButton="Save"
-
+        <Search
+          size="large"
+          placeholder="Enter survey title"
+          value={title}
+          onSearch={() => {
+            saveSurveyData();
+          }}
+          onChange={e => setTitle(e.target.value)}
+          style={{ width: 400 }}
+          enterButton="Save"
         />
       </section>
       <section className={styles.section}>
@@ -161,6 +178,27 @@ const SurveyEdit = () => {
           saveQuestion={saveQuestion}
           onItemDelete={deleteQuestion}
         />
+      </section>
+      <section className={styles.section}>
+        <Title level={3}>Additional fields</Title>
+        <p>Custom Footer HTML</p>
+        <div>
+          <Input.TextArea
+            value={footerHTML}
+            style={{ width: 400 }}
+            onChange={e => setFooterHTML(e.target.value)}
+          />
+          <Button
+            type="primary"
+            size="large"
+            style={{ marginLeft: 8, verticalAlign: 'top' }}
+            onClick={() => {
+              saveSurveyData();
+            }}
+          >
+            Save
+          </Button>
+        </div>
       </section>
     </div>
   );
