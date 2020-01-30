@@ -1,8 +1,9 @@
 import { VALIDATE } from 'lib/auth';
 import { message } from 'antd';
 import { get, isEmpty } from 'lodash';
+import config from '../config/default';
 
-const apiUrl = 'https://api.getmetasurvey.com/api';
+const apiUrl = config.api.url;
 const getToken = () => window.localStorage.getItem('token');
 const getAuthHeaders = () => ({
   Authorization: `Bearer ${getToken()}`,
