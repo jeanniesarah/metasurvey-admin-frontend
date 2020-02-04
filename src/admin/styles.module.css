@@ -1,9 +1,14 @@
+.layout {
+  min-height: 100%;
+}
+
 .header {
   background-color: #FFFFFF;
   border-bottom: 1px solid #E1E1E1;
 }
 
 .content {
+  flex: 1 0 auto;
   padding: 50px;
 }
 
