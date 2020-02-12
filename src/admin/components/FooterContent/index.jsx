@@ -20,7 +20,7 @@ const FooterContent = () => {
       <div style={{ float: 'right' }}>
         <Button
           type={'link'}
-          href={'mailto:indiehackersspb@gmail.com'}
+          href={'mailto:hi@getmetasurvey.com'}
           className={styles.buttonHoverHack}
           style={{ color: '#6A6A6A' }}
         >
@@ -28,7 +28,7 @@ const FooterContent = () => {
         </Button>
         <Button
           type={'link'}
-          href={'mailto:indiehackersspb@gmail.com'}
+          href={'mailto:hi@getmetasurvey.com'}
           className={styles.buttonHoverHack}
           style={{ color: '#FF3399' }}
         >

@@ -14,9 +14,8 @@ import AuthForm from './AuthForm';
 import './AuthForm.css';
 import './AuthFormHeader.css';
 import AuthFormHeader from './AuthFormHeader';
-import { string } from 'prop-types';
 import setInputStatus from '../../helpers/setInputStatus';
-import { api, urls } from '../../data/urls';
+import { api } from '../../data/urls';
 import axios from 'axios';
 import objectToFormData from '../../helpers/objectToFormData';
 import { setAccessTokenCookie } from '../../helpers/auth/accessTokenCookie';
@@ -123,7 +122,7 @@ class RestorePassForm extends Component {
               <a
                 className="login-form__forgot"
                 target="_blank"
-                href={`mailto:${urls.contactUsEmail}`}
+                href={`mailto:hi@getmetasurvey.com`}
               >
                 Need help?
               </a>
