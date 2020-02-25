@@ -44,6 +44,7 @@ export default ({ surveyId }) => {
             datasets: [
               {
                 // last 0 is to make graph have Y axis start with 0. Hack
+                label: '# of Yes',
                 data: [...stats.map(s => s.yesCount), 0], //[300, 50, 100],
                 backgroundColor: [
                   'rgba(255, 99, 132)',
@@ -68,6 +69,7 @@ export default ({ surveyId }) => {
               },
               {
                 // last 0 is to make graph have Y axis start with 0. Hack
+                label: '# of No',
                 data: [...stats.map(s => s.noCount), 0], //[300, 50, 100],
                 backgroundColor: [
                   'rgba(201, 0, 43)',
