@@ -96,8 +96,20 @@ export const getSurveyStatsPiechart = id => {
     .then(handleApiErrors);
 };
 
-export const getSurveyStatsAnswers = id => {
-  return fetch(`${apiUrl}/admin/stat/${id}/table`, {
+export const getSurveyStatsAnswers = (
+  id,
+  { page, pageSize, noEmpty } = {}
+) => {
+  const url = new URL(`${apiUrl}/admin/stat/${id}/table`);
+  const params = {
+    ...(page !== undefined ? { page } : {}),
+    ...(pageSize !== undefined ? { pageSize } : {}),
+    ...(noEmpty !== undefined ? { noEmpty } : {}),
+  };
+  Object.keys(params).forEach(key =>
+    url.searchParams.append(key, params[key])
+  );
+  return fetch(url, {
     headers: getHeaders(),
   })
     .then(body => body.json())
