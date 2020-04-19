@@ -1,90 +1,110 @@
 import React, { useState } from 'react';
 import { isEmpty } from 'lodash';
-import {Spin, Tooltip, Typography} from 'antd';
-// import Tooltip from '@material-ui/core/Tooltip';
+import { Form, Spin, Switch, Tooltip, Typography } from 'antd';
 
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
+import { Table } from 'antd';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import styles from './styles.module.css';
 import { getSurveyStatsAnswers } from '../../../../../lib/api';
-import isMuiElement from '@material-ui/core/utils/isMuiElement';
 const { Title } = Typography;
+
+const DEFAULT_PAGE_SIZE = 10;
+const DEFAULT_NO_EMPTY = false;
 
 const useStyles = makeStyles({
   root: {
     width: '100%',
     overflowX: 'auto',
-    maxHeight: 500,
     overflow: 'auto',
   },
   table: {
     minWidth: 650,
   },
 });
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('Frozen yoghurt', ' ', ' ', '✓', ' '),
-  createData('Ice cream sandwich', ' ', ' ', '✓', ' '),
-  createData('Eclair', ' ', '✓', '✓', ' '),
-  createData('Cupcake', ' ', ' ', '✓', '✓'),
-  createData('Gingerbread', '✓', ' ', '✓', ' '),
-];
 
 export default ({ surveyId }) => {
   const [stats, setStats] = useState(undefined);
+  const [noEmpty, setNoEmpty] = useState(DEFAULT_NO_EMPTY);
 
   const classes = useStyles();
-  if (!stats) {
-    getSurveyStatsAnswers(surveyId)
-        .then(setStats);
 
+  const fetchAnswers = options => {
+    return getSurveyStatsAnswers(surveyId, {
+      page: 1,
+      pageSize: DEFAULT_PAGE_SIZE,
+      noEmpty: noEmpty,
+      ...options,
+    }).then(setStats);
+  };
+
+  if (!stats) {
+    fetchAnswers();
     return <Spin size="large" />;
   }
 
-  const { questions, results } = stats;
+  /**
+    pageInfo: {
+      page: 1
+      pageSize: 20
+      total: 1728
+      totalPages: 87
+    }
+   */
+  const { questions, results, pageInfo } = stats;
 
   if (isEmpty(results)) {
     return null;
   }
 
+  const columns = [];
+  for (let i = 0; i < questions.length; i++) {
+    const question = questions[i];
+    columns.push({
+      title: ({ sortOrder, sortColumn, filters }) => (
+        <Tooltip
+          key={question._id}
+          title={question.text}
+          placement="topLeft"
+        >
+          <span className={styles.badge}>{i + 1}</span>
+        </Tooltip>
+      ),
+      render: answer => (answer ? '✅' : '❌'),
+      dataIndex: `answers[${i}]`,
+    });
+  }
+  columns.push({
+    title: "Users' comment",
+    dataIndex: 'comment',
+  });
+
+  const handleTableChange = (pagination, filters, sorter) => {
+    const page = pagination.current;
+    fetchAnswers({ page });
+  };
+  const handleNoEmptyChange = value => {
+    setNoEmpty(value);
+    fetchAnswers({ noEmpty: value });
+  };
+
   return (
     <>
       <Title>Answers table</Title>
+      <Form.Item label="Hide rows with empty comment">
+        <Switch checked={noEmpty} onChange={handleNoEmptyChange} />
+      </Form.Item>
       <Paper className={classes.root}>
         <Table
-          className={classes.table}
-          aria-label="simple table"
-          stickyHeader
-        >
-          <TableHead>
-            <TableRow>
-              {questions.map((question, index) => <TableCell key={index}>
-                <Tooltip key={question._id} title={question.text} placement="topLeft">
-                  <span className={styles.badge}>{index + 1}</span>
-                </Tooltip>
-              </TableCell>)}
-              <TableCell>Users' comment</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {results.map((row) => (
-              <TableRow key={row._id}>
-                {row.answers.map((answer, index) => <TableCell key={index}>{ answer ? '✅' : '❌'}</TableCell>)}
-                <TableCell component="th" scope="row">
-                  {row.comment}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+          columns={columns}
+          rowKey={record => record._id}
+          dataSource={results}
+          pagination={{
+            total: pageInfo.total,
+            pageSize: pageInfo.pageSize,
+          }}
+          onChange={handleTableChange}
+        />
       </Paper>
     </>
   );
