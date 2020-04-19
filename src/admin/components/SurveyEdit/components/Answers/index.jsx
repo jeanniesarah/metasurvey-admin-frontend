@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { isEmpty } from 'lodash';
-import { Spin, Tooltip, Typography } from 'antd';
+import { Form, Spin, Switch, Tooltip, Typography } from 'antd';
 
 import { Table } from 'antd';
 import Paper from '@material-ui/core/Paper';
@@ -25,20 +25,17 @@ const useStyles = makeStyles({
 
 export default ({ surveyId }) => {
   const [stats, setStats] = useState(undefined);
-  const [isLoading, setIsLoading] = useState(true);
+  const [noEmpty, setNoEmpty] = useState(DEFAULT_NO_EMPTY);
 
   const classes = useStyles();
 
   const fetchAnswers = options => {
-    // setIsLoading(true);
     return getSurveyStatsAnswers(surveyId, {
       page: 1,
       pageSize: DEFAULT_PAGE_SIZE,
-      noEmpty: DEFAULT_NO_EMPTY,
+      noEmpty: noEmpty,
       ...options,
-    })
-      .then(setStats)
-      .then(() => setIsLoading(false));
+    }).then(setStats);
   };
 
   if (!stats) {
@@ -86,10 +83,17 @@ export default ({ surveyId }) => {
     const page = pagination.current;
     fetchAnswers({ page });
   };
+  const handleNoEmptyChange = value => {
+    setNoEmpty(value);
+    fetchAnswers({ noEmpty: value });
+  };
 
   return (
     <>
       <Title>Answers table</Title>
+      <Form.Item label="Hide rows with empty comment">
+        <Switch checked={noEmpty} onChange={handleNoEmptyChange} />
+      </Form.Item>
       <Paper className={classes.root}>
         <Table
           columns={columns}
@@ -99,7 +103,6 @@ export default ({ surveyId }) => {
             total: pageInfo.total,
             pageSize: pageInfo.pageSize,
           }}
-          loading={isLoading}
           onChange={handleTableChange}
         />
       </Paper>
